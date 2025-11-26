@@ -1,5 +1,7 @@
 <p align="center">
-  <img width="320" height="320" alt="GreenHand" src="https://github.com/user-attachments/assets/cd7bd0f7-c9d4-4b6f-bc19-8658dddf7b06" />
+  <img width="378" height="292" alt="_31DF5823-8FCB-487F-A744-A98BD20E0B14_-removebg-preview" src="https://github.com/user-attachments/assets/0e0ddbb7-78f9-40c6-90a6-1f154e19d3a9" />
+
+
 </p>
 
 # 🌱 Green Hand - Application Mobile pour la Gestion des Cultures
