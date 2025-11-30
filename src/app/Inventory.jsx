@@ -1,10 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { COLORS, globalStyles } from "../style/Global"; 
+
 
 const Inventory = () => {
   return (
-    <View>
-      <Text>Inventory</Text>
+   <View style={globalStyles.container} >
+          <Text>Inventory</Text>
     </View>
   )
 }

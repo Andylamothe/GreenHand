@@ -1,16 +1,83 @@
 import { StyleSheet } from 'react-native';
 
 
+export const COLORS = {
+  primaryGreen: "#98b55f",
+  lightCream: "#F4FFC3",
+  foreground: "#030213",
+  background: "#ffffff",
+  tabActiveBackground: "rgba(255,255,255,0.3)",
+  toggleBar: "rgba(255,255,255,0.2)",
+  borderColor : "rgba(255,255,255,0.5)",
+  glassBackground: "rgba(255,255,255,0.2)",
+  shadowColor: "#000"
+};
+
+
+    const glassBox = {
+  borderWidth: 1,
+  borderColor: COLORS.borderColor,
+  backgroundColor: COLORS.glassBackground,
+  borderRadius: 20,
+  shadowColor: COLORS.shadowColor,
+  shadowOffset: { width: 4, height: 10},
+  shadowOpacity: 20,
+  shadowRadius: 16,    
+  elevation: 12,
+  };
+
+
  
-export const styles = StyleSheet.create({
-  container: {
+export const globalStyles = StyleSheet.create({
+
+    container: {
     flex: 1,
-    backgroundColor: '#8FA954',
+    backgroundColor: COLORS.primaryGreen,
   },
+
+
+
+  //// tab bar 
+  tabBarGlassStyle: {
+  ...glassBox,
+  position: "absolute",
+  bottom: 30,         
+  left: 20,
+  right: 20,
+  height: 90,         
+  paddingTop: 25,
+  borderRadius: 30,
+ 
+  },
+
+    tabIconActiveBg: {
+    width: 60,
+    height: 55,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.3)",
+  },
+
+  tabIconInactiveBg: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+
+
+
+  /////////////////////////////////////////////////
+
+
   scrollContent: {
     padding: 20,
     paddingBottom: 100,
   },
+
  
   welcomeCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',

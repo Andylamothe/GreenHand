@@ -1,9 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { COLORS, globalStyles } from "../style/Global"; 
+
 
 const PlantDetails = () => {
   return (
-    <View>
+       <View style={globalStyles.container} >
       <Text>PlantDetails</Text>
     </View>
   )

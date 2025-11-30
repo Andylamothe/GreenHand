@@ -1,13 +1,15 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-import Chatbot from "../app/Chatbot"
 import Home from "../app/Home";
 import Inventory from "../app/Inventory";
+import Chatbot from "../app/Chatbot";
 import Profile from "../app/Profile";
+import { View, Text } from 'react-native'
+import { COLORS, globalStyles } from "../style/Global"; 
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,11 +26,16 @@ function Tabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({ color, size }) => (
-          <Ionicons name={ICONS[route.name]} size={size} color={color} />
+        tabBarIcon: ({ focused, color, size }) => ( 
+      <View style={focused ? globalStyles.tabIconActiveBg : globalStyles.tabIconInactiveBg}>
+        <Ionicons name={ICONS[route.name]} size={size} color={color} />
+      </View>
+          
         ),
-        tabBarActiveTintColor: "#2f3640",
-        tabBarInactiveTintColor: "gray",
+        tabBarStyle: globalStyles.tabBarGlassStyle,
+         tabBarActiveTintColor: "white",
+         tabBarInactiveTintColor: "white",
+
       })}
     >
       <Tab.Screen name="Home" component={Home} />
@@ -41,10 +48,11 @@ function Tabs() {
 
 export default function AppNavigator() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+   <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false , contentStyle: {backgroundColor: COLORS.primaryGreen}}}>
         <Stack.Screen name="Tabs" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+ 
