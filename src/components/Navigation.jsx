@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Home, Package, MessageCircle, User } from 'lucide-react-native';
-import { styles } from '@/constants/global';
+import { styles } from '../style/global';
  
 export function Navigation({ activeScreen, setActiveScreen }) {
   const navItems = [
@@ -36,4 +36,6 @@ export function Navigation({ activeScreen, setActiveScreen }) {
     </View>
   );
 }
+
+export default Navigation;
  
