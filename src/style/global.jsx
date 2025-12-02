@@ -29,6 +29,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 16,
   },
+  plantIcon: {
+    marginLeft: 10, //
+  },
   welcomeTextContainer: {
     flex: 1,
   },

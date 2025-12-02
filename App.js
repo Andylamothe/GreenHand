@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 // import { Home } from './components/Home';
 // import { Inventory } from './components/Inventory';
 import ChatbotScreen from './src/screens/ChatbotScreen';
+import HomeScreen from './src/screens/HomeScreen';
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from './src/components/Navigation';
@@ -37,8 +38,8 @@ export default function App() {
     // }
 
     switch (activeScreen) {
-      // case 'home':
-      //   return <Home onSelectPlant={handleSelectPlant} />;
+      case 'home':
+          return <HomeScreen />;
       // case 'inventory':
       //   return <Inventory onSelectItem={handleSelectInventoryItem} />;
       case 'chatbot':
