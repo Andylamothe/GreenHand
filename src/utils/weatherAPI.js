@@ -1,23 +1,27 @@
 import axios from 'axios';
 
-const API_KEY = '245523bd0cdb76b1d528038647d1d705';
-const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
+const BASE_URL = 'https://api.open-meteo.com/v1/forecast';
 
 export const getWeatherData = async (latitude, longitude) => {
     try {
         const response = await axios.get(BASE_URL, {
             params: {
-                lat: latitude,
-                lon: longitude,
-                appid: API_KEY,
-                units: 'metric', // Les températures seront renvoyées en Celsius
-                lang: 'fr', // La langue des réponses sera en français
+                latitude,
+                longitude,
+                current: 'temperature_2m,relative_humidity_2m,wind_speed_10m',
+                hourly: 'precipitation_probability',
             },
         });
 
-        return response.data; // Retourne les données météo
+        const currentData = response.data.current;
+        const probability = response.data.hourly.precipitation_probability?.[0] ?? 0;
+
+        return {
+            ...currentData,
+            precipitation_probability: probability,
+        };
     } catch (error) {
         console.error('Erreur API: ', error);
-        throw error; // Lance l'erreur pour qu'elle soit gérée dans le composant
+        throw error;
     }
 };

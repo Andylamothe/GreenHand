@@ -4,6 +4,8 @@ import { View, Text } from 'react-native';
 // import { Inventory } from './components/Inventory';
 import ChatbotScreen from './src/screens/ChatbotScreen';
 import HomeScreen from './src/screens/HomeScreen';
+import RegistrationScreen from './src/screens/RegistrationScreen';
+import LoginScreen from './src/screens/LoginScreen';
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from './src/components/Navigation';
@@ -44,6 +46,9 @@ export default function App() {
       //   return <Inventory onSelectItem={handleSelectInventoryItem} />;
       case 'chatbot':
         return <ChatbotScreen />;
+
+      case 'profile':
+        return <RegistrationScreen />;
       // case 'profile':
       //   return <Profile />;
       default:
