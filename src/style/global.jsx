@@ -29,6 +29,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 16,
   },
+  plantIcon: {
+    marginLeft: 10, //
+  },
   welcomeTextContainer: {
     flex: 1,
   },
@@ -37,12 +40,12 @@ export const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 4,
   },
-  farmerText: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#FFFFFF',
-  },
- 
+farmerText: {
+  fontSize: 32,
+  fontWeight: '700',
+  color: '#FFFFFF',
+},
+
   weatherCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 32,
@@ -157,8 +160,6 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#FFFFFF',
   },
-
-
     //////// Photos Card //////////
 
    photosCard: {
@@ -372,6 +373,27 @@ startAnalyzeText: {
   fontSize: 16,
   fontWeight: "600",
 },
+  submitButton: {
+  marginTop: 20,
+  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+  paddingVertical: 16,
+  borderRadius: 24,
+  alignItems: 'center',
+  borderWidth: 1,
+  borderColor: 'rgba(255, 255, 255, 0.3)',
+},
 
+submitText: {
+  color: '#fff',
+  fontSize: 16,
+  fontWeight: '700',
+},
+
+input: {
+  color: '#fff',
+  fontSize: 16,
+},
 });
+
+
 
