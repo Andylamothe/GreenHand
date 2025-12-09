@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-const API_URL = "http://192.168.68.105:3000/api";
+// ============================================================
+// - URL configurée via .env pour éviter les hardcodes
+// ============================================================
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api';
 
 export default function usePlant(plantId) {
   const [plant, setPlant] = useState(null);
