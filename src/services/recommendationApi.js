@@ -1,5 +1,22 @@
-// Service pour communiquer avec l'API de recommandations
+// ============================================================
+// RECOMMENDATION API SERVICE
+// Service pour communiquer avec l'API de recommandations IA
+// ============================================================
+// - Utilise axios (cohérent avec usePlant.jsx)
+// - URL configurée via .env pour éviter les hardcodes
+// - Headers Authorization à ajouter quand l'auth sera intégrée
+// ============================================================
+
+import axios from 'axios';
+
 const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api';
+
+const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 export const recommendationApi = {
   /**
@@ -7,27 +24,16 @@ export const recommendationApi = {
    */
   async saveRecommendation(data) {
     try {
-      const response = await fetch(`${API_URL}/recommendations`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: data.userId,
-          userQuery: data.userQuery,
-          aiResponse: data.aiResponse,
-          recommendationType: data.recommendationType,
-          priority: data.priority,
-          plantId: data.plantId,
-        }),
+      const response = await apiClient.post('/recommendations', {
+        userId: data.userId,
+        userQuery: data.userQuery,
+        aiResponse: data.aiResponse,
+        recommendationType: data.recommendationType,
+        priority: data.priority,
+        plantId: data.plantId,
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      return result;
+      return response.data;
     } catch (error) {
       console.error('Erreur lors de la sauvegarde de la recommandation:', error);
       throw error;
@@ -39,19 +45,9 @@ export const recommendationApi = {
    */
   async getRecommendationsByUserId(userId) {
     try {
-      const response = await fetch(`${API_URL}/recommendations/${userId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await apiClient.get(`/recommendations/${userId}`);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      return result;
+      return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des recommandations:', error);
       throw error;
