@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,17 +6,17 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Feather';
-import { styles } from '../style/global';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/Feather";
+import { styles } from "../style/global";
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ goToLogin }) => {
   const [form, setForm] = useState({
     email: "",
     username: "",
     password: "",
-    location: ""
+    location: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,12 +26,14 @@ const RegistrationScreen = () => {
     setForm({ ...form, [field]: value });
   };
 
+  const API_URL = "http://10.0.2.2:3000/api/auth/register";
+
   const handleRegister = async () => {
     setLoading(true);
     setError("");
 
     try {
-      const res = await fetch("lienAPIAvenir", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
@@ -46,7 +48,7 @@ const RegistrationScreen = () => {
       }
 
       alert("Account created successfully!");
-
+      goToLogin();
     } catch (e) {
       setError("Network error");
     } finally {
@@ -57,7 +59,6 @@ const RegistrationScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-
         {/* Title Card */}
         <View style={[styles.welcomeCard, { marginTop: 30 }]}>
           <View style={{ flex: 1 }}>
@@ -69,7 +70,7 @@ const RegistrationScreen = () => {
 
         {/* Error */}
         {error !== "" && (
-          <Text style={{ color: 'red', marginBottom: 20 }}>{error}</Text>
+          <Text style={{ color: "red", marginBottom: 20 }}>{error}</Text>
         )}
 
         {/* Form Card */}
@@ -153,7 +154,6 @@ const RegistrationScreen = () => {
               <Text style={styles.submitText}>Create Account</Text>
             )}
           </TouchableOpacity>
-
         </View>
       </ScrollView>
     </SafeAreaView>
