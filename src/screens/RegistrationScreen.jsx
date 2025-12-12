@@ -10,12 +10,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { styles } from "../style/global";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginScreen = ({ onLoginSuccess }) => {
+const RegistrationScreen = ({ goToLogin }) => {
   const [form, setForm] = useState({
     email: "",
+    username: "",
     password: "",
+    location: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -25,37 +26,29 @@ const LoginScreen = ({ onLoginSuccess }) => {
     setForm({ ...form, [field]: value });
   };
 
-  const API_LOGIN = "http://10.0.2.2:3000/api/auth/login";
+  const API_URL = "http://10.0.2.2:3000/api/auth/register";
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     setLoading(true);
     setError("");
 
     try {
-      const res = await fetch(API_LOGIN, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password,
-        }),
+        body: JSON.stringify(form),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Login failed");
+        setError(data.message || "Registration failed");
         setLoading(false);
         return;
       }
 
-      console.log("TOKEN :", data.token);
-      console.log("USER :", data.user);
-
-      await AsyncStorage.setItem("token", data.token);
-      onLoginSuccess(); //redirection après login réussi
-
-      alert("Login successful!");
+      alert("Account created successfully!");
+      goToLogin();
     } catch (e) {
       setError("Network error");
     } finally {
@@ -66,13 +59,13 @@ const LoginScreen = ({ onLoginSuccess }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Title */}
+        {/* Title Card */}
         <View style={[styles.welcomeCard, { marginTop: 30 }]}>
           <View style={{ flex: 1 }}>
-            <Text style={styles.welcomeText}>Welcome</Text>
-            <Text style={styles.farmerText}>Back</Text>
+            <Text style={styles.welcomeText}>Create your</Text>
+            <Text style={styles.farmerText}>Account</Text>
           </View>
-          <Icon name="log-in" size={32} color="#fff" />
+          <Icon name="user-plus" size={32} color="#fff" />
         </View>
 
         {/* Error */}
@@ -82,7 +75,7 @@ const LoginScreen = ({ onLoginSuccess }) => {
 
         {/* Form Card */}
         <View style={styles.tipsCard}>
-          <Text style={styles.tipsTitle}>Sign In</Text>
+          <Text style={styles.tipsTitle}>Sign Up</Text>
 
           {/* Email */}
           <View style={styles.tipItem}>
@@ -96,6 +89,22 @@ const LoginScreen = ({ onLoginSuccess }) => {
                 style={styles.input}
                 value={form.email}
                 onChangeText={(v) => handleChange("email", v)}
+              />
+            </View>
+          </View>
+
+          {/* Username */}
+          <View style={styles.tipItem}>
+            <View style={styles.tipIconContainer}>
+              <Icon name="user" size={20} color="#fff" />
+            </View>
+            <View style={styles.tipTextContainer}>
+              <TextInput
+                placeholder="Username"
+                placeholderTextColor="rgba(255,255,255,0.7)"
+                style={styles.input}
+                value={form.username}
+                onChangeText={(v) => handleChange("username", v)}
               />
             </View>
           </View>
@@ -117,16 +126,32 @@ const LoginScreen = ({ onLoginSuccess }) => {
             </View>
           </View>
 
-          {/* Submit */}
+          {/* Location */}
+          <View style={styles.tipItem}>
+            <View style={styles.tipIconContainer}>
+              <Icon name="map-pin" size={20} color="#fff" />
+            </View>
+            <View style={styles.tipTextContainer}>
+              <TextInput
+                placeholder="City (Location)"
+                placeholderTextColor="rgba(255,255,255,0.7)"
+                style={styles.input}
+                value={form.location}
+                onChangeText={(v) => handleChange("location", v)}
+              />
+            </View>
+          </View>
+
+          {/* Submit Button */}
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={handleLogin}
+            onPress={handleRegister}
             disabled={loading}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text style={styles.submitText}>Login</Text>
+              <Text style={styles.submitText}>Create Account</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -135,4 +160,4 @@ const LoginScreen = ({ onLoginSuccess }) => {
   );
 };
 
-export default LoginScreen;
+export default RegistrationScreen;
