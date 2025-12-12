@@ -1,9 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { Home } from './components/Home';
-// import { Inventory } from './components/Inventory';
 import ChatbotScreen from './src/screens/ChatbotScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import StartScreen from "./src/screens/StartScreen";
@@ -13,9 +13,13 @@ import LoginScreen from './src/screens/LoginScreen';
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from './src/components/Navigation';
 import { styles } from './src/style/global';
+import InventoryScreen from './src/screens/InventoryScreen';
+import LoginScreen from './src/screens/LoginScreen'
+import { TokenService } from './src/api/tokenService';
  
 
 export default function App() {
+
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [screen, setScreen] = useState("start");
 
@@ -41,6 +45,7 @@ export default function App() {
     return (
       <View style={styles.container}>
         {screen === "home" && <HomeScreen />}
+        {screen === "inventory" && <InventoryScreen />}
         {screen === "chatbot" && <ChatbotScreen />}
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
@@ -78,3 +83,4 @@ export default function App() {
       return null;
   }
 }
+
