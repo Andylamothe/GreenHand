@@ -1,35 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text } from 'react-native';
 // import { Home } from './components/Home';
-// import { Inventory } from './components/Inventory';
 import ChatbotScreen from './src/screens/ChatbotScreen';
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from './src/components/Navigation';
 import { styles } from './src/style/global';
+import InventoryScreen from './src/screens/InventoryScreen';
+import LoginScreen from './src/screens/LoginScreen'
+import { TokenService } from './src/api/tokenService';
  
 export default function App() {
+
+
   const [activeScreen, setActiveScreen] = useState('home');
-  const [selectedPlant, setSelectedPlant] = useState(null);
- 
-  // const handleSelectPlant = (plant) => {
-  //   setSelectedPlant(plant);
-  // };
- 
-  // const handleSelectInventoryItem = (item) => {
-  //   // Convert inventory item to plant format
-  //   const plant = {
-  //     name: item.name.replace(' Seeds', ''),
-  //     stage: 'Growing',
-  //     progress: Math.floor(Math.random() * 50) + 30, // Random progress between 30-80
-  //     days: Math.floor(Math.random() * 30) + 10, // Random days between 10-40
-  //   };
-  //   setSelectedPlant(plant);
-  // };
- 
-  // const handleBackFromPlant = () => {
-  //   setSelectedPlant(null);
-  // };
+
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Quand login réussi
+  const handleLoginSuccess = async () => {
+    const token = await TokenService.getToken();
+    console.log("TOKEN APRÈS LOGIN =", token);
+    setIsLoggedIn(true);
+  };
+
+  if (!isLoggedIn) {
+    return <LoginScreen onLoginSuccess={handleLoginSuccess} />;
+  }
+
  
   const renderScreen = () => {
     // if (selectedPlant) {
@@ -39,8 +37,8 @@ export default function App() {
     switch (activeScreen) {
       // case 'home':
       //   return <Home onSelectPlant={handleSelectPlant} />;
-      // case 'inventory':
-      //   return <Inventory onSelectItem={handleSelectInventoryItem} />;
+      case 'inventory':
+        return <InventoryScreen  />;
       case 'chatbot':
         return <ChatbotScreen />;
       // case 'profile':
