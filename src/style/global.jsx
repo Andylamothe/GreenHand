@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 100,
   },
- 
   welcomeCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 32,
@@ -160,6 +159,39 @@ farmerText: {
     fontWeight: '600',
     color: '#FFFFFF',
   },
+
+  floatingAddButton: {
+  position: "absolute",
+  right: 25,
+  bottom: 160,
+  width: 60,
+  height: 60,
+  borderRadius: 30,
+  backgroundColor: "rgba(255,255,255,0.25)",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.3)",
+  justifyContent: "center",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOpacity: 0.25,
+  shadowOffset: { width: 0, height: 3 },
+  shadowRadius: 5,
+},
+nextButton: {
+  backgroundColor: "rgba(255,255,255,0.25)",
+  paddingVertical: 14,
+  alignItems: "center",
+  borderRadius: 20,
+  marginTop: 20,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.3)",
+},
+nextButtonText: {
+  color: "white",
+  fontSize: 18,
+  fontWeight: "700",
+},
+
     //////// Photos Card //////////
 
    photosCard: {
