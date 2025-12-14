@@ -13,51 +13,28 @@ import { styles } from "../style/global";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ onLoginSuccess }) => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (field, value) => {
-    setForm({ ...form, [field]: value });
-  };
-
-  const API_LOGIN = "http://10.0.2.2:3000/api/auth/login";
+  const handleChange = (field, value) => setForm({ ...form, [field]: value });
 
   const handleLogin = async () => {
     setLoading(true);
     setError("");
-
     try {
-      const res = await fetch(API_LOGIN, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.password,
-        }),
+      const res = await AuthApi.login({
+        email: form.email,
+        password: form.password,
       });
+      const { token, user } = res.data;
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Login failed");
-        setLoading(false);
-        return;
-      }
-
-      console.log("TOKEN :", data.token);
-      console.log("USER :", data.user);
-
-      await AsyncStorage.setItem("token", data.token);
-      onLoginSuccess(); //redirection après login réussi
-
-      alert("Login successful!");
-    } catch (e) {
-      setError("Network error");
+      await AsyncStorage.setItem("token", token);
+      console.log("Logged in user:", user);
+      onLoginSuccess();
+    } catch (err) {
+      console.log("Login error:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }

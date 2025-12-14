@@ -1,34 +1,32 @@
 import React from "react";
-import { View, Text , StyleSheet} from "react-native";
+import { View, Text , StyleSheet, TouchableOpacity} from "react-native";
 import { Package } from "lucide-react-native";
 
-export default function ItemCard({ plant, categoryName }) {
-  return (
-    <View style={styles.card}>
-      
+export default function ItemCard({ plant, categoryName, onPress }) {
+ return (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={onPress}
+      activeOpacity={0.8}
+    >
       <View style={styles.iconContainer}>
         <Package color="#fff" size={20} />
       </View>
 
-
-      <Text style={styles.title}>
-        {plant.name}
-      </Text>
+      <Text style={styles.title}>{plant.name}</Text>
 
       <Text style={styles.category}>
         Catégorie : {categoryName}
       </Text>
-
 
       {plant.lastWatered && (
         <Text style={styles.watered}>
           Arrosée : {new Date(plant.lastWatered).toLocaleDateString()}
         </Text>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
-
 
 const styles = StyleSheet.create({
   card: {
