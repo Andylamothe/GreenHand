@@ -1,12 +1,21 @@
-import React from "react";
-import { View, Text, ScrollView, Image, ActivityIndicator } from "react-native";
-import { styles } from "../style/global"
-
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  Modal,
+  Pressable,
+} from "react-native";
+import { styles } from "../style/global";
 
 import useCharts from "../hooks/useCharts";
 
 export default function Dashboards() {
   const { charts, loading } = useCharts();
+
+  const [selectedImage, setSelectedImage] = useState(null);
 
   if (loading) {
     return (
@@ -20,32 +29,64 @@ export default function Dashboards() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20 }}>
-      <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>
-        Dashboards
-      </Text>
-
-      {charts.length === 0 && (
-        <Text>Aucun graphique trouvé.</Text>
-      )}
-
-      {charts.map((url, index) => (
-        <View key={index} style={{ marginBottom: 25 }}>
+    <>
+      <Modal visible={!!selectedImage} transparent={true}>
+        <Pressable
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0,0,0,0.9)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() => setSelectedImage(null)}
+        >
           <Image
-            source={{ uri: url }}
+            source={{ uri: selectedImage }}
             style={{
-              width: "100%",
-              height: 250,
-              borderRadius: 10,
+              width: "90%",
+              height: "80%",
               resizeMode: "contain",
-              backgroundColor: "#f0f0f0",
             }}
           />
-          <Text style={{ marginTop: 8, textAlign: "center" }}>
-            {url.split("/").pop()}
-          </Text>
-        </View>
-      ))}
-    </ScrollView>
+        </Pressable>
+      </Modal>
+
+      <ScrollView contentContainerStyle={{ padding: 30 }}>
+        <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 20 }}>
+          Annual Dashboards
+        </Text>
+
+        {charts.length === 0 && <Text>Aucun graphique trouvé.</Text>}
+
+        {charts.map((url, index) => (
+          <View
+            key={index}
+            style={{
+              marginBottom: 25,
+              backgroundColor: "#fff",
+              borderRadius: 10,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 3 },
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 6,
+            }}
+          >
+            <Pressable onPress={() => setSelectedImage(url)}>
+              <Image
+                source={{ uri: url }}
+                style={{
+                  width: "100%",
+                  height: 250,
+                  borderRadius: 10,
+                  resizeMode: "contain",
+                  backgroundColor: "#f0f0f0",
+                }}
+              />
+            </Pressable>
+          </View>
+        ))}
+      </ScrollView>
+    </>
   );
 }
