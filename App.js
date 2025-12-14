@@ -15,6 +15,20 @@ import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
 import Navigation from "./src/components/Navigation";
 import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
 import { styles } from "./src/style/global";
+// import ChatbotScreen from './src/screens/ChatbotScreen';
+import HomeScreen from "./src/screens/HomeScreen";
+import StartScreen from "./src/screens/StartScreen";
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+
+// import { Profile } from './components/Profile';
+// import { PlantDetail } from './components/PlantDetail';
+import Navigation from "./src/components/Navigation";
+import { styles } from "./src/style/global";
+import InventoryScreen from "./src/screens/InventoryScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import Dashboards from "./src/screens/Dashboards";
+
+import { TokenService } from "./src/api/tokenService";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -46,10 +60,11 @@ export default function App() {
   if (isAuthenticated) {
     return (
       <View style={styles.container}>
-        {screen === "home" && <HomeScreen setScreen={setScreen} />}
-        {screen === "weatherDashboard" && <WeatherDashboard />}
-        {screen === "chatbot" && <ChatbotScreen />}
-        {/* {screen === "profile" && <PlantDashboardScreen />} */}
+        {screen === "home" && <HomeScreen />}
+        {screen === "inventory" && <InventoryScreen />}
+        {/* {screen === "chatbot" && <ChatbotScreen />} */}
+        {screen === "dashboards" && <Dashboards />}
+
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
     );

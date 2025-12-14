@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { styles } from "../style/global";
+import { AuthApi } from "../api/userApi";
 
 const RegistrationScreen = ({ goToLogin }) => {
   const [form, setForm] = useState({
@@ -18,39 +19,21 @@ const RegistrationScreen = ({ goToLogin }) => {
     password: "",
     location: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = (field, value) => {
-    setForm({ ...form, [field]: value });
-  };
-
-  const API_URL = "http://10.0.2.2:3000/api/auth/register";
+  const handleChange = (field, value) => setForm({ ...form, [field]: value });
 
   const handleRegister = async () => {
     setLoading(true);
     setError("");
-
     try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Registration failed");
-        setLoading(false);
-        return;
-      }
-
+      await AuthApi.register(form);
       alert("Account created successfully!");
       goToLogin();
-    } catch (e) {
-      setError("Network error");
+    } catch (err) {
+      console.log("Registration error:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }

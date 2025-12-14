@@ -3,13 +3,12 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#8FA954',
+    backgroundColor: '#5F8550',
   },
   scrollContent: {
     padding: 20,
     paddingBottom: 100,
   },
- 
   welcomeCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 32,
@@ -37,15 +36,15 @@ export const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: '#F4F7E8',
     marginBottom: 4,
   },
-farmerText: {
-  fontSize: 32,
-  fontWeight: '700',
-  color: '#FFFFFF',
-},
-
+  farmerText: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#F4F7E8',
+  },
+ 
   weatherCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 32,
@@ -57,7 +56,7 @@ farmerText: {
   weatherTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#F4F7E8',
     marginBottom: 20,
   },
   weatherMetrics: {
@@ -79,7 +78,7 @@ farmerText: {
   weatherValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#F4F7E8',
   },
  
   tipsCard: {
@@ -93,7 +92,7 @@ farmerText: {
   tipsTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#F4F7E8',
     marginBottom: 16,
   },
   tipItem: {
@@ -121,12 +120,12 @@ farmerText: {
   tipTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#F4F7E8',
     marginBottom: 4,
   },
   tipSubtitle: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#f4f7e8b2',
   },
  
   bottomNav: {
@@ -158,8 +157,41 @@ farmerText: {
   navLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: '#F4F7E8',
   },
+
+  floatingAddButton: {
+  position: "absolute",
+  right: 25,
+  bottom: 160,
+  width: 60,
+  height: 60,
+  borderRadius: 30,
+  backgroundColor: "rgba(255,255,255,0.25)",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.3)",
+  justifyContent: "center",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOpacity: 0.25,
+  shadowOffset: { width: 0, height: 3 },
+  shadowRadius: 5,
+},
+nextButton: {
+  backgroundColor: "rgba(255,255,255,0.25)",
+  paddingVertical: 14,
+  alignItems: "center",
+  borderRadius: 20,
+  marginTop: 20,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.3)",
+},
+nextButtonText: {
+  color: "white",
+  fontSize: 18,
+  fontWeight: "700",
+},
+
     //////// Photos Card //////////
 
    photosCard: {
@@ -181,7 +213,7 @@ farmerText: {
   photosTitle: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#FFFFFF",
+    color: "#F4F7E8",
   },
 
   addBtn: {
@@ -197,7 +229,7 @@ farmerText: {
   },
 
   addBtnText: {
-    color: "#FFFFFF",
+    color: "#F4F7E8",
     fontSize: 14,
   },
 
@@ -234,7 +266,7 @@ farmerText: {
   },
 
   photoDate: {
-    color: "rgba(255,255,255,0.7)",
+    color: "#F4F7E8",
     fontSize: 12,
     marginTop: 6,
   },
@@ -256,7 +288,7 @@ farmerText: {
   },
 
   emptyText: {
-    color: "rgba(255,255,255,0.5)",
+    color: "#F4F7E8",
   },
 
   //////// Analyse Card //////////
@@ -278,7 +310,7 @@ analysisHeader: {
 
 analysisTitle: {
   fontSize: 20,
-  color: "#FFFFFF",
+  color: "#F4F7E8",
   fontWeight: "600",
 },
 
@@ -290,18 +322,18 @@ scoreBox: {
 },
 
 scoreSubtitle: {
-  color: "rgba(255,255,255,0.8)",
+  color: "#F4F7E8",
   marginBottom: 4,
 },
 
 scoreValue: {
   fontSize: 48,
   fontWeight: "700",
-  color: "#FFF",
+  color: "#F4F7E8",
 },
 
 scoreLabel: {
-  color: "#FFF",
+  color: "#F4F7E8",
   fontSize: 16,
   marginTop: 4,
 },
@@ -319,7 +351,7 @@ recoCard: {
 recoTitle: {
   fontSize: 18,
   fontWeight: "600",
-  color: "#FFF",
+  color: "#F4F7E8",
   marginBottom: 12,
 },
 
@@ -338,7 +370,7 @@ recoIcon: {
 
 recoText: {
   fontSize: 14,
-  color: "rgba(255,255,255,0.8)",
+  color: "#F4F7E8",
 },
 
 
@@ -353,7 +385,7 @@ reanalyzeBtn: {
 },
 
 reanalyzeText: {
-  color: "#FFF",
+  color: "#F4F7E8",
   fontSize: 16,
   fontWeight: "600",
 },
@@ -369,7 +401,7 @@ startAnalyzeBtn: {
 },
 
 startAnalyzeText: {
-  color: "#FFF",
+  color: "#F4F7E8",
   fontSize: 16,
   fontWeight: "600",
 },
