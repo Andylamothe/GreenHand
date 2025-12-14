@@ -4,11 +4,11 @@ import { View, Text, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { Home } from './components/Home';
-import ChatbotScreen from './src/screens/ChatbotScreen';
+// import ChatbotScreen from './src/screens/ChatbotScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import StartScreen from "./src/screens/StartScreen";
 import RegistrationScreen from './src/screens/RegistrationScreen';
-import LoginScreen from './src/screens/LoginScreen';
+
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from './src/components/Navigation';
@@ -46,7 +46,7 @@ export default function App() {
       <View style={styles.container}>
         {screen === "home" && <HomeScreen />}
         {screen === "inventory" && <InventoryScreen />}
-        {screen === "chatbot" && <ChatbotScreen />}
+        {/* {screen === "chatbot" && <ChatbotScreen />} */}
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
     );
