@@ -4,16 +4,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { Home } from './components/Home';
 // import { Inventory } from './components/Inventory';
-import ChatbotScreen from './src/screens/ChatbotScreen';
-import HomeScreen from './src/screens/HomeScreen';
+import ChatbotScreen from "./src/screens/ChatbotScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 import StartScreen from "./src/screens/StartScreen";
-import RegistrationScreen from './src/screens/RegistrationScreen';
-import LoginScreen from './src/screens/LoginScreen';
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+import LoginScreen from "./src/screens/LoginScreen";
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
-import Navigation from './src/components/Navigation';
-import { styles } from './src/style/global';
- 
+import Navigation from "./src/components/Navigation";
+import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
+import { styles } from "./src/style/global";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -30,7 +30,12 @@ export default function App() {
 
   if (isAuthenticated === null) {
     return (
-      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+      <View
+        style={[
+          styles.container,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
         <ActivityIndicator size="large" color="#fff" />
       </View>
     );
@@ -40,8 +45,10 @@ export default function App() {
   if (isAuthenticated) {
     return (
       <View style={styles.container}>
-        {screen === "home" && <HomeScreen />}
+        {screen === "home" && <HomeScreen setScreen={setScreen} />}
+        {screen === "weatherDashboard" && <WeatherDashboard />}
         {screen === "chatbot" && <ChatbotScreen />}
+        {/* {screen === "profile" && <WeatherDashboard />} */}
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
     );
@@ -68,11 +75,7 @@ export default function App() {
       );
 
     case "register":
-      return (
-        <RegistrationScreen
-          goToLogin={() => setScreen("login")}
-        />
-      );
+      return <RegistrationScreen goToLogin={() => setScreen("login")} />;
 
     default:
       return null;
