@@ -1,65 +1,87 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // import { Home } from './components/Home';
-// import { Inventory } from './components/Inventory';
-import ChatbotScreen from './src/screens/ChatbotScreen';
+// import ChatbotScreen from './src/screens/ChatbotScreen';
+import HomeScreen from "./src/screens/HomeScreen";
+import StartScreen from "./src/screens/StartScreen";
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
-import Navigation from './src/components/Navigation';
-import { styles } from './src/style/global';
- 
-export default function App() {
-  const [activeScreen, setActiveScreen] = useState('home');
-  const [selectedPlant, setSelectedPlant] = useState(null);
- 
-  // const handleSelectPlant = (plant) => {
-  //   setSelectedPlant(plant);
-  // };
- 
-  // const handleSelectInventoryItem = (item) => {
-  //   // Convert inventory item to plant format
-  //   const plant = {
-  //     name: item.name.replace(' Seeds', ''),
-  //     stage: 'Growing',
-  //     progress: Math.floor(Math.random() * 50) + 30, // Random progress between 30-80
-  //     days: Math.floor(Math.random() * 30) + 10, // Random days between 10-40
-  //   };
-  //   setSelectedPlant(plant);
-  // };
- 
-  // const handleBackFromPlant = () => {
-  //   setSelectedPlant(null);
-  // };
- 
-  const renderScreen = () => {
-    // if (selectedPlant) {
-    //   return <PlantDetail plant={selectedPlant} onBack={handleBackFromPlant} />;
-    // }
+import Navigation from "./src/components/Navigation";
+import { styles } from "./src/style/global";
+import InventoryScreen from "./src/screens/InventoryScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import Dashboards from "./src/screens/Dashboards";
 
-    switch (activeScreen) {
-      // case 'home':
-      //   return <Home onSelectPlant={handleSelectPlant} />;
-      // case 'inventory':
-      //   return <Inventory onSelectItem={handleSelectInventoryItem} />;
-      case 'chatbot':
-        return <ChatbotScreen />;
-      // case 'profile':
-      //   return <Profile />;
-      default:
-        return (
-          <View style={styles.container}>
-            <View style={styles.scrollContent}>
-              <Text style={styles.farmerText}>Bienvenue sur GreenHand!</Text>
-              <Text style={styles.welcomeText}>Sélectionnez Chat dans la navigation pour tester le chatbot.</Text>
-            </View>
-          </View>
-        );
-    }
-  };  return (
-    <View style={styles.container}>
-      {renderScreen()}
-      <Navigation activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
-    </View>
-  );
+import { TokenService } from "./src/api/tokenService";
+
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [screen, setScreen] = useState("start");
+
+  //check le token au debut
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token = await AsyncStorage.getItem("token");
+      setIsAuthenticated(!!token);
+    };
+    verifyToken();
+  }, []);
+
+  if (isAuthenticated === null) {
+    return (
+      <View
+        style={[
+          styles.container,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
+    );
+  }
+
+  //si connecté -> app principale
+  if (isAuthenticated) {
+    return (
+      <View style={styles.container}>
+        {screen === "home" && <HomeScreen />}
+        {screen === "inventory" && <InventoryScreen />}
+        {/* {screen === "chatbot" && <ChatbotScreen />} */}
+        {screen === "dashboards" && <Dashboards />}
+
+        <Navigation activeScreen={screen} setActiveScreen={setScreen} />
+      </View>
+    );
+  }
+
+  //Si pas connecter -> auth flow
+  switch (screen) {
+    case "start":
+      return (
+        <StartScreen
+          goToLogin={() => setScreen("login")}
+          goToRegister={() => setScreen("register")}
+        />
+      );
+
+    case "login":
+      return (
+        <LoginScreen
+          onLoginSuccess={() => {
+            setIsAuthenticated(true);
+            setScreen("home");
+          }}
+        />
+      );
+
+    case "register":
+      return <RegistrationScreen goToLogin={() => setScreen("login")} />;
+
+    default:
+      return null;
+  }
 }
- 

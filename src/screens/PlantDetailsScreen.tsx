@@ -9,9 +9,9 @@ import TakePicture from "../components/PlantDetails/Camera";
 import PlantAnalyseCard from "../components/PlantDetails/PlantAnalyseCard";
 import PlantHeader from "../components/PlantDetails/PlantHeaderCard";
 
-export default function PlantDetailsScreen({ setActiveScreen }) {
+export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
   // Id temporaire pour tester
-  const plantId = "693228dfa5aebb55e20cce55";
+  // const plantId = "693228dfa5aebb55e20cce55";
 
   const { plant, category, photos, loading, addPhoto, deletePhoto } =
     usePlant(plantId);
