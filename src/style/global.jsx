@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 100,
   },
- 
   welcomeCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 32,
@@ -28,6 +27,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
+  },
+  plantIcon: {
+    marginLeft: 10, //
   },
   welcomeTextContainer: {
     flex: 1,
@@ -158,6 +160,37 @@ export const styles = StyleSheet.create({
     color: '#F4F7E8',
   },
 
+  floatingAddButton: {
+  position: "absolute",
+  right: 25,
+  bottom: 160,
+  width: 60,
+  height: 60,
+  borderRadius: 30,
+  backgroundColor: "rgba(255,255,255,0.25)",
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.3)",
+  justifyContent: "center",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOpacity: 0.25,
+  shadowOffset: { width: 0, height: 3 },
+  shadowRadius: 5,
+},
+nextButton: {
+  backgroundColor: "rgba(255,255,255,0.25)",
+  paddingVertical: 14,
+  alignItems: "center",
+  borderRadius: 20,
+  marginTop: 20,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.3)",
+},
+nextButtonText: {
+  color: "white",
+  fontSize: 18,
+  fontWeight: "700",
+},
 
     //////// Photos Card //////////
 
@@ -372,6 +405,27 @@ startAnalyzeText: {
   fontSize: 16,
   fontWeight: "600",
 },
+  submitButton: {
+  marginTop: 20,
+  backgroundColor: 'rgba(255, 255, 255, 0.25)',
+  paddingVertical: 16,
+  borderRadius: 24,
+  alignItems: 'center',
+  borderWidth: 1,
+  borderColor: 'rgba(255, 255, 255, 0.3)',
+},
 
+submitText: {
+  color: '#fff',
+  fontSize: 16,
+  fontWeight: '700',
+},
+
+input: {
+  color: '#fff',
+  fontSize: 16,
+},
 });
+
+
 
