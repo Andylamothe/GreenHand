@@ -10,6 +10,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { styles } from "../style/global";
+import { AuthApi } from "../api/userApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ onLoginSuccess }) => {
