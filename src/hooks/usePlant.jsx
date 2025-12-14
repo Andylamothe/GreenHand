@@ -1,10 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { PlantApi } from "../api/plantApi";
 
-// ============================================================
-// - URL configurée via .env pour éviter les hardcodes
-// ============================================================
-
 export default function usePlant(plantId) {
   const [plant, setPlant] = useState(null);
   const [category, setCategory] = useState(null);
@@ -12,10 +8,8 @@ export default function usePlant(plantId) {
   const [loading, setLoading] = useState(true);
 
   const fetchPlant = useCallback(async () => {
-    console.log("usePlant fetchPlant called with plantId:", plantId);
-
     if (!plantId) {
-      console.log("No plantId provided, stopping fetch.");
+      console.log("No plantId");
       setLoading(false);
       return;
     }
@@ -26,15 +20,41 @@ export default function usePlant(plantId) {
       const res = await PlantApi.getPlantDetails(plantId);
       console.log(res.data);
 
-      setPlant(res.data.plant);
+      // Calcul des jours et la progression //////////////////////
+
+      const createdAt = new Date(res.data.plant.createdAt);
+      const now = new Date();
+      const diffTime = Math.abs(now - createdAt);
+      const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      const growthSpeed = res.data.category.Growth;
+      let totalDays;
+
+      switch (growthSpeed.toLowerCase()) {
+        case "fast":
+          totalDays = 30;
+          break;
+        case "moderate":
+          totalDays = 60;
+          break;
+        case "slow":
+          totalDays = 120;
+          break;
+        default:
+          totalDays = 60;
+      }
+
+      const progress = Math.min(100, Math.floor((days / totalDays) * 100));
+
+      /// rajouter les informations pour la plante //////////////////////
+      setPlant({
+        ...res.data.plant,
+        days,
+        progress,
+      });
+
       setCategory(res.data.category);
       setPhotos(res.data.photos || []);
-
-      console.log("Updated state:", {
-        plant: res.data.plant,
-        category: res.data.category,
-        photos: res.data.photos,
-      });
     } catch (error) {
       console.log("Error fetching plant:", error);
     } finally {
@@ -42,6 +62,7 @@ export default function usePlant(plantId) {
     }
   }, [plantId]);
 
+  /// ajouter une photo pour la plantes //////////////////////
   const addPhoto = async (base64) => {
     try {
       const photoData = {
@@ -51,7 +72,6 @@ export default function usePlant(plantId) {
       };
 
       const res = await PlantApi.addPhoto(plantId, photoData);
-
       setPhotos((prev) => [...prev, res.data]);
       return res.data;
     } catch (error) {
@@ -59,20 +79,53 @@ export default function usePlant(plantId) {
     }
   };
 
+  /// supprimer une photo //////////////////////
   const deletePhoto = async (photoId) => {
     try {
       await PlantApi.deletePhoto(plantId, photoId);
-
       setPhotos((prev) => prev.filter((p) => p._id !== photoId));
     } catch (error) {
       console.log("Error deleting photo:", error);
     }
   };
 
-  useEffect(() => {
-  fetchPlant();
-}, [fetchPlant]);
+  // modifier une plante
 
+  //// modifier ses details ////////////////////////////////////////
+
+  const updatePlantDetails = async (updates) => {
+    try {
+      const res = await PlantApi.updatePlantDetails(plantId, updates);
+      setPlant((prev) => ({ ...prev, ...res.data }));
+    } catch (error) {
+      console.log("Error updating plant:", error);
+    }
+  };
+
+  /// modifier la derniere fois qu'on l'a arrosée //////////////////////
+
+  const updatePlantWateringDate = async (newDate) => {
+    try {
+      const res = await PlantApi.updatePlantWateringDate(plantId, newDate);
+      setPlant((prev) => ({ ...prev, lastWatered: res.data.lastWatered }));
+    } catch (error) {
+      console.log("Error updating watering date:", error);
+    }
+  };
+
+  /// supprimer une plante //////////////////////
+
+  const deletePlant = async () => {
+    try {
+      await PlantApi.deletePlant(plantId);
+    } catch (error) {
+      console.log("Error deleting plant:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlant();
+  }, [fetchPlant]);
 
   return {
     plant,
@@ -82,5 +135,8 @@ export default function usePlant(plantId) {
     addPhoto,
     deletePhoto,
     refresh: fetchPlant,
+    updatePlantDetails,
+    updatePlantWateringDate,
+    deletePlant,
   };
 }
