@@ -15,8 +15,8 @@ export const geminiService = {
    */
   async getAgricultureAdvice(userQuery) {
     try {
-      // Utilise un modèle supporté et stable
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
+      // ⚠️ Utilise gemini-1.5-flash (quota gratuit plus généreux que gemini-2.5-pro)
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
       const systemPrompt = `Tu es un assistant agricole expert. Tu fournis des conseils pratiques et scientifiquement fondés 
       sur la culture, l'irrigation, la fertilisation, la prévention des maladies et la gestion des cultures. Votre réponse doit faire maximum 225 mots pour avoir la possibilité d'être transférée dans une base donnée.
