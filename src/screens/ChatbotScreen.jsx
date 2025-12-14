@@ -208,7 +208,7 @@ const ChatbotScreen = () => {
 
   const renderEmptyState = () => (
     <View style={emptyStateStyles.container}>
-      <Sprout size={72} color="#66BB6A" strokeWidth={2} style={{ marginBottom: 20 }} />
+      <Sprout size={72} color="#f7f7f7ff" strokeWidth={2} style={{ marginBottom: 20 }} />
       <Text style={emptyStateStyles.title}>Bienvenue sur AgriBot!</Text>
       <Text style={emptyStateStyles.subtitle}>
         Posez-moi vos questions sur l'agriculture, la culture, l'irrigation, et plus encore.
