@@ -7,4 +7,6 @@ export const PlantApi = {
   getPlantDetails: (id) => api.get(`/plants/${id}/details`),
   addPhoto: (id, data) => api.post(`/plants/${id}/photos`, data),
   deletePhoto: (plantId, photoId) => api.delete(`/plants/${plantId}/photos/${photoId}`),
+  updatePlantDetails: (plantId, updates) => api.patch(`/plants/${plantId}`, updates),
+  updatePlantWateringDate: (plantId, newDate) => api.patch(`/plants/${plantId}`, { lastWatered: newDate }),
 };
