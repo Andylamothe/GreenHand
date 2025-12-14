@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '../style/global';
 import { getWeatherData } from '../utils/weatherAPI';
+import { Sprout } from "lucide-react-native";
 import Icon from 'react-native-vector-icons/Feather';
 
 const HomeScreen = () => {
@@ -43,7 +44,8 @@ const HomeScreen = () => {
                         <Text style={styles.welcomeText}>Welcome back,</Text>
                         <Text style={styles.farmerText}>Farmer!</Text>
                     </View>
-                    <Icon name="sprout" size={32} color="#fff" />
+                    <Sprout size={30} color="#fff" />
+
                 </View>
 
                 {/* Loading / Error */}

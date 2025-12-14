@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import PlantDetailsScreen from "./PlantDetailsScreen";
+
 import {
   View,
   Text,
@@ -23,6 +25,7 @@ export default function InventoryScreen() {
   const [activeScreen, setActiveScreen] = useState("inventory");
   const [allCategories, setAllCategories] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedPlantId, setSelectedPlantId] = useState(null);
 
   const handleSearch = async (text) => {
     setSearch(text);
@@ -87,6 +90,15 @@ export default function InventoryScreen() {
           (p) => getCategoryName(p.categoryId) === activeCategory
         );
 
+  if (activeScreen === "details" && selectedPlantId) {
+    return (
+      <PlantDetailsScreen
+        plantId={selectedPlantId}
+        setActiveScreen={setActiveScreen}
+      />
+    );
+  }
+
   if (activeScreen === "addPlant") {
     return (
       <AjoutPlant
@@ -102,18 +114,10 @@ export default function InventoryScreen() {
         style={styles.container}
         contentContainerStyle={inventoryStyles.scrollContent}
       >
-        <View
-          style={inventoryStyles.headerCard}
-        >
-          <Text
-            style={inventoryStyles.title}
-          >
-            Inventory
-          </Text>
+        <View style={inventoryStyles.headerCard}>
+          <Text style={inventoryStyles.title}>Inventory</Text>
 
-          <View
-            style={inventoryStyles.searchBar}
-          >
+          <View style={inventoryStyles.searchBar}>
             <Search size={20} color="#fff" style={{ marginRight: 8 }} />
             <TextInput
               placeholder="Search items..."
@@ -141,22 +145,22 @@ export default function InventoryScreen() {
             <Text style={inventoryStyles.emptyTitle}>
               Aucun item dans votre inventaire 🌱
             </Text>
-            <Text
-              style={inventoryStyles.emptySubtitle}
-            >
+            <Text style={inventoryStyles.emptySubtitle}>
               Ajoutez une plante pour commencer
             </Text>
           </View>
         )}
 
-        <View
-          style={inventoryStyles.grid}
-        >
+        <View style={inventoryStyles.grid}>
           {filtered.map((plant) => (
             <ItemCard
               key={plant._id}
               plant={plant}
               categoryName={getCategoryName(plant.categoryId)}
+              onPress={() => {
+                setSelectedPlantId(plant._id);
+                setActiveScreen("details");
+              }}
             />
           ))}
         </View>
