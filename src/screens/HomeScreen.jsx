@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, ActivityIndicator, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '../style/global';
 import { getWeatherData } from '../utils/weatherAPI';
 import Icon from 'react-native-vector-icons/Feather';
 
-const HomeScreen = () => {
+const HomeScreen = ({ setScreen }) => {
     const [weather, setWeather] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -16,9 +16,8 @@ const HomeScreen = () => {
             setError(null);
 
             try {
-                {/* dogota colombie a remplcacer avec la location */}
-                const latitude = 4.624335;
-                const longitude = -74.063;
+                const latitude = 45.50884;
+                const longitude = -73.58781;
 
                 const data = await getWeatherData(latitude, longitude);
                 if (data) setWeather(data);
@@ -35,13 +34,12 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
-
+            <ScrollView contentContainerStyle={styles.scrollContent}>
                 {/* Welcome Card */}
                 <View style={[styles.welcomeCard, { marginTop: 30 }]}>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.welcomeText}>Welcome back,</Text>
-                        <Text style={styles.farmerText}>Farmer!</Text>
+                        <Text style={styles.welcomeText}>Salut ,</Text>
+                        <Text style={styles.farmerText}>Fermier!</Text>
                     </View>
                     <Icon name="sprout" size={32} color="#fff" />
                 </View>
@@ -53,7 +51,7 @@ const HomeScreen = () => {
                 {/* Weather Card */}
                 {weather && !loading && !error && (
                     <View style={styles.weatherCard}>
-                        <Text style={styles.weatherTitle}>Today's Weather</Text>
+                        <Text style={styles.weatherTitle}>Météo du jour</Text>
 
                         <View style={styles.weatherMetrics}>
                             <View style={styles.weatherMetric}>
@@ -84,20 +82,28 @@ const HomeScreen = () => {
                                 <Text style={styles.weatherValue}>{weather.wind_speed_10m} km/h</Text>
                             </View>
                         </View>
+
+                        {/* Bouton icône pour accéder aux graphiques */}
+                        <TouchableOpacity
+                            style={styles.submitButton} // ← ton style existant
+                            onPress={() => setScreen("weatherDashboard")}
+                        >
+                            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Voir les graphiques</Text>
+                        </TouchableOpacity>
                     </View>
                 )}
 
                 {/* Tips Card */}
                 <View style={styles.tipsCard}>
-                    <Text style={styles.tipsTitle}>Today's Tips</Text>
+                    <Text style={styles.tipsTitle}>Conseils du jour</Text>
 
                     <View style={styles.tipItem}>
                         <View style={styles.tipIconContainer}>
                             <Icon name="droplet" size={20} color="#fff" />
                         </View>
                         <View style={styles.tipTextContainer}>
-                            <Text style={styles.tipTitle}>Water your tomatoes</Text>
-                            <Text style={styles.tipSubtitle}>Best time is early morning</Text>
+                            <Text style={styles.tipTitle}>Surveillez l’humidité</Text>
+                            <Text style={styles.tipSubtitle}>Arrosez moins souvent, l’air sec chauffe plus vite en hiver</Text>
                         </View>
                     </View>
 
@@ -106,8 +112,8 @@ const HomeScreen = () => {
                             <Icon name="alert-circle" size={20} color="#fff" />
                         </View>
                         <View style={styles.tipTextContainer}>
-                            <Text style={styles.tipTitle}>Check for pests</Text>
-                            <Text style={styles.tipSubtitle}>Inspect leaves regularly</Text>
+                            <Text style={styles.tipTitle}>Maximisez la lumière</Text>
+                            <Text style={styles.tipSubtitle}>Placez les plantes près des fenêtres ensoleillées ou utilisez une lampe de croissance</Text>
                         </View>
                     </View>
 
@@ -116,16 +122,13 @@ const HomeScreen = () => {
                             <Icon name="check-circle" size={20} color="#fff" />
                         </View>
                         <View style={styles.tipTextContainer}>
-                            <Text style={styles.tipTitle}>Harvest ready</Text>
-                            <Text style={styles.tipSubtitle}>3 crops are ready to harvest</Text>
+                            <Text style={styles.tipTitle}>Évitez le froid direct</Text>
+                            <Text style={styles.tipSubtitle}>Gardez les plantes à l’écart des fenêtres mal isolées et des courants d’air</Text>
                         </View>
                     </View>
                 </View>
 
             </ScrollView>
-
-
-            
         </SafeAreaView>
     );
 };
