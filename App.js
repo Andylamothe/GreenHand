@@ -9,6 +9,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import StartScreen from "./src/screens/StartScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from "./src/components/Navigation";
@@ -48,7 +49,7 @@ export default function App() {
         {screen === "home" && <HomeScreen setScreen={setScreen} />}
         {screen === "weatherDashboard" && <WeatherDashboard />}
         {screen === "chatbot" && <ChatbotScreen />}
-        {/* {screen === "profile" && <WeatherDashboard />} */}
+        {/* {screen === "profile" && <PlantDashboardScreen />} */}
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
     );
