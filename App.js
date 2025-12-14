@@ -1,25 +1,24 @@
-
 import React, { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { Home } from './components/Home';
-import ChatbotScreen from './src/screens/ChatbotScreen';
-import HomeScreen from './src/screens/HomeScreen';
+// import ChatbotScreen from './src/screens/ChatbotScreen';
+import HomeScreen from "./src/screens/HomeScreen";
 import StartScreen from "./src/screens/StartScreen";
-import RegistrationScreen from './src/screens/RegistrationScreen';
-import LoginScreen from './src/screens/LoginScreen';
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+
 // import { Profile } from './components/Profile';
 // import { PlantDetail } from './components/PlantDetail';
-import Navigation from './src/components/Navigation';
-import { styles } from './src/style/global';
-import InventoryScreen from './src/screens/InventoryScreen';
-import LoginScreen from './src/screens/LoginScreen'
-import { TokenService } from './src/api/tokenService';
- 
+import Navigation from "./src/components/Navigation";
+import { styles } from "./src/style/global";
+import InventoryScreen from "./src/screens/InventoryScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import Dashboards from "./src/screens/Dashboards";
+
+import { TokenService } from "./src/api/tokenService";
 
 export default function App() {
-
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [screen, setScreen] = useState("start");
 
@@ -34,7 +33,12 @@ export default function App() {
 
   if (isAuthenticated === null) {
     return (
-      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+      <View
+        style={[
+          styles.container,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
         <ActivityIndicator size="large" color="#fff" />
       </View>
     );
@@ -46,7 +50,9 @@ export default function App() {
       <View style={styles.container}>
         {screen === "home" && <HomeScreen />}
         {screen === "inventory" && <InventoryScreen />}
-        {screen === "chatbot" && <ChatbotScreen />}
+        {/* {screen === "chatbot" && <ChatbotScreen />} */}
+        {screen === "dashboards" && <Dashboards />}
+
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
     );
@@ -73,14 +79,9 @@ export default function App() {
       );
 
     case "register":
-      return (
-        <RegistrationScreen
-          goToLogin={() => setScreen("login")}
-        />
-      );
+      return <RegistrationScreen goToLogin={() => setScreen("login")} />;
 
     default:
       return null;
   }
 }
-
