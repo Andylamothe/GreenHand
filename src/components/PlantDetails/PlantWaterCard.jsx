@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 
   datePicker: {
     marginTop: 10,
-    color: "white",
+    color: "#F4F7E8",
     backgroundColor: "rgba(255, 255, 255, 0.1)",
   },
 });
