@@ -1,65 +1,143 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-// import { Home } from './components/Home';
-// import { Inventory } from './components/Inventory';
-import ChatbotScreen from './src/screens/ChatbotScreen';
-// import { Profile } from './components/Profile';
-// import { PlantDetail } from './components/PlantDetail';
-import Navigation from './src/components/Navigation';
-import { styles } from './src/style/global';
- 
-export default function App() {
-  const [activeScreen, setActiveScreen] = useState('home');
-  const [selectedPlant, setSelectedPlant] = useState(null);
- 
-  // const handleSelectPlant = (plant) => {
-  //   setSelectedPlant(plant);
-  // };
- 
-  // const handleSelectInventoryItem = (item) => {
-  //   // Convert inventory item to plant format
-  //   const plant = {
-  //     name: item.name.replace(' Seeds', ''),
-  //     stage: 'Growing',
-  //     progress: Math.floor(Math.random() * 50) + 30, // Random progress between 30-80
-  //     days: Math.floor(Math.random() * 30) + 10, // Random days between 10-40
-  //   };
-  //   setSelectedPlant(plant);
-  // };
- 
-  // const handleBackFromPlant = () => {
-  //   setSelectedPlant(null);
-  // };
- 
-  const renderScreen = () => {
-    // if (selectedPlant) {
-    //   return <PlantDetail plant={selectedPlant} onBack={handleBackFromPlant} />;
-    // }
+import React, { useState, useEffect } from "react";
+import { View, Text, ActivityIndicator } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-    switch (activeScreen) {
-      // case 'home':
-      //   return <Home onSelectPlant={handleSelectPlant} />;
-      // case 'inventory':
-      //   return <Inventory onSelectItem={handleSelectInventoryItem} />;
-      case 'chatbot':
-        return <ChatbotScreen />;
-      // case 'profile':
-      //   return <Profile />;
-      default:
-        return (
-          <View style={styles.container}>
-            <View style={styles.scrollContent}>
-              <Text style={styles.farmerText}>Bienvenue sur GreenHand!</Text>
-              <Text style={styles.welcomeText}>Sélectionnez Chat dans la navigation pour tester le chatbot.</Text>
-            </View>
-          </View>
-        );
+// import { Home } from './components/Home';
+
+// import { Inventory } from './components/Inventory';
+import ChatbotScreen from "./src/screens/ChatbotScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
+import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
+ import ChatbotScreen from './src/screens/ChatbotScreen';
+import HomeScreen from "./src/screens/HomeScreen";
+import StartScreen from "./src/screens/StartScreen";
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+import AccountSettingsScreen from "./src/screens/Profil/AccountSettingsScreen";
+import NotificationsScreen from "./src/screens/NotificationsScreen";
+import HelpSupportScreen from "./src/screens/HelpSupportScreen";
+import AdminPanelScreen from "./src/screens/AdminPanelScreen";
+
+import ProfileScreen from "./src/screens/ProfileScreen";
+// import { PlantDetail } from './components/PlantDetail';
+import Navigation from "./src/components/Navigation";
+import { styles } from "./src/style/global";
+import InventoryScreen from "./src/screens/InventoryScreen";
+
+
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [screen, setScreen] = useState("start");
+  const [user, setUser] = useState(null);
+
+
+  const handleLogout = async () => {
+  try {
+    await UserApi.logout(); 
+  } catch (err) {
+    console.log("Logout API error:", err.message);
+  } finally {
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("user");
+
+    setUser(null);
+    setIsAuthenticated(false);
+    setScreen("start");
+  }
+};
+
+const refreshUser = async () => {
+  const res = await UserApi.me();
+  setUser(res.data);
+  await AsyncStorage.setItem("user", JSON.stringify(res.data));
+};
+
+
+const handleUserUpdate = async (updatedUser) => {
+  setUser(updatedUser);
+  await AsyncStorage.setItem("user", JSON.stringify(updatedUser));
+};
+
+
+  //check le token au debut
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token = await AsyncStorage.getItem("token");
+      const storedUser = await AsyncStorage.getItem("user");
+      if (token && storedUser) {
+      setUser(JSON.parse(storedUser)); 
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
-  };  return (
-    <View style={styles.container}>
-      {renderScreen()}
-      <Navigation activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
-    </View>
-  );
+  
+    };
+    verifyToken();
+  }, []);
+
+  if (isAuthenticated === null) {
+    return (
+      <View
+        style={[
+          styles.container,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
+    );
+  }
+
+  //si connecté -> app principale
+  if (isAuthenticated) {
+    return (
+      <View style={styles.container}>
+        {screen === "home" && <HomeScreen setScreen={setScreen} />}
+        {screen === "inventory" && <InventoryScreen />}
+        {screen === "chatbot" && <ChatbotScreen user={user} />}
+        {screen === "dashboards" && <Dashboards />}
+        {screen === "profile" && (<ProfileScreen user={user} onLogout={handleLogout} goToAccount={() => setScreen("account")}  
+        goToNotifications={() => setScreen("notifications")} goToHelp={() => setScreen("help")} goToAdmin={() => setScreen("admin")}/>)}
+        {screen === "account" && (<AccountSettingsScreen user={user} onUserUpdate={handleUserUpdate} goBack={() => setScreen("profile")}  onLogout={handleLogout} refreshUser={refreshUser}/>)}
+        {screen === "notifications" && (<NotificationsScreen goBack={() => setScreen("profile")} />)}
+        {screen === "help" && (<HelpSupportScreen goBack={() => setScreen("profile")} />)}
+        {screen === "admin" && (<AdminPanelScreen goBack={() => setScreen("profile")}/>)}
+
+
+        {screen === "plantDashBoard" && <PlantDashboardScreen />}
+        {screen === "weatherDashboard" && <WeatherDashboard />}
+
+        <Navigation activeScreen={screen} setActiveScreen={setScreen} />
+      </View>
+    );
+  }
+
+  //Si pas connecter -> auth flow
+  switch (screen) {
+    case "start":
+      return (
+        <StartScreen
+          goToLogin={() => setScreen("login")}
+          goToRegister={() => setScreen("register")}
+        />
+      );
+
+    case "login":
+      return (
+        <LoginScreen
+          setUser={setUser}
+          onLoginSuccess={() => {
+            setIsAuthenticated(true);
+            setScreen("home");
+            
+          }}
+        />
+      );
+
+    case "register":
+      return <RegistrationScreen goToLogin={() => setScreen("login")} />;
+
+    default:
+      return null;
+  }
 }
- 
