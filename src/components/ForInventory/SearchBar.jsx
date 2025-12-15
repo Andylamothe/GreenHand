@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: "white",
+    color: "#F4F7E8",
   },
 });

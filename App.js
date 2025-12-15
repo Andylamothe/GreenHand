@@ -9,7 +9,7 @@ import ChatbotScreen from "./src/screens/ChatbotScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
 import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
-// import ChatbotScreen from './src/screens/ChatbotScreen';
+ import ChatbotScreen from './src/screens/ChatbotScreen';
 import HomeScreen from "./src/screens/HomeScreen";
 import StartScreen from "./src/screens/StartScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
@@ -94,7 +94,7 @@ const handleUserUpdate = async (updatedUser) => {
       <View style={styles.container}>
         {screen === "home" && <HomeScreen setScreen={setScreen} />}
         {screen === "inventory" && <InventoryScreen />}
-        {screen === "chatbot" && <ChatbotScreen />}
+        {screen === "chatbot" && <ChatbotScreen user={user} />}
         {screen === "dashboards" && <Dashboards />}
         {screen === "profile" && (<ProfileScreen user={user} onLogout={handleLogout} goToAccount={() => setScreen("account")}  
         goToNotifications={() => setScreen("notifications")} goToHelp={() => setScreen("help")} goToAdmin={() => setScreen("admin")}/>)}
