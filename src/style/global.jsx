@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#8FA954",
+    backgroundColor: "#5F8550",
   },
   scrollContent: {
     padding: 20,
@@ -187,7 +187,7 @@ nextButton: {
   borderColor: "rgba(255,255,255,0.3)",
 },
 nextButtonText: {
-  color: "white",
+  color: "#F4F7E8",
   fontSize: 18,
   fontWeight: "700",
 },

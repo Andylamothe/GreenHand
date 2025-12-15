@@ -15,7 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Sprout, Bot, User, Send } from 'lucide-react-native';
 import { styles } from '../style/global';
 import { geminiService } from '../services/geminiService';
-import { recommendationApi } from '../services/recommendationApi';
+import { ChatbotApi } from '../api/chatbotApi';
 
 // Constants
 const COLORS = {
@@ -29,7 +29,7 @@ const COLORS = {
   buttonDisabled: 'rgba(255,255,255,0.2)',
 };
 
-const ChatbotScreen = () => {
+const ChatbotScreen = ({ user }) => {
   // State
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
@@ -39,8 +39,18 @@ const ChatbotScreen = () => {
   // Refs
   const flatListRef = useRef(null);
 
-  // TODO: remplacer par le userId issu de l'authentification
-  const userId = 'demo-user-id';
+  // Guard clause - user must be authenticated
+  if (!user?._id) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: COLORS.textPrimary }}>Authentification requise</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  const userId = user._id;
 
   // Effects
   useEffect(() => {
@@ -143,7 +153,7 @@ const ChatbotScreen = () => {
     
     setSavingMessageId(message.id);
     try {
-      await recommendationApi.saveRecommendation({
+      await ChatbotApi.saveRecommendation({
         userId,
         userQuery: message.userQuery,
         aiResponse: message.text,

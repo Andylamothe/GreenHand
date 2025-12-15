@@ -168,7 +168,7 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
             onPress={() => setShowPicker(true)}
             style={styles.input}
           >
-            <Text style={{ color: "white" }}>
+            <Text style={{ color: "#F4F7E8" }}>
               {lastWatered
                 ? new Date(lastWatered).toLocaleDateString()
                 : "Choisir une date"}
