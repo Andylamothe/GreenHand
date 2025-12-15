@@ -39,10 +39,7 @@ export default function WeatherDashboard() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const token = await AsyncStorage.getItem("token");
-        console.log("TOKEN =", token);
-
-        const res = await getWeatherDashboard(token);
+        const res = await getWeatherDashboard();
         setData(res);
       } catch (e) {
         console.error("FETCH ERROR", e);
