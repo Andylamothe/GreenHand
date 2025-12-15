@@ -10,8 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { styles } from "../style/profilStyle";
-import { UserApi } from "../api/userApi";
+import { styles } from "../../style/profilStyle";
+import { UserApi } from "../../api/userApi";
 
 export default function AccountSettingsScreen({
   user,
