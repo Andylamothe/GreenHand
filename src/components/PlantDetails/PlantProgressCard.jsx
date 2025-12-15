@@ -1,13 +1,11 @@
-import React from 'react'
-import {Text, StyleSheet, View } from 'react-native'
+import React from "react";
+import { Text, StyleSheet, View } from "react-native";
 import { TrendingUp } from "lucide-react-native";
+import PlantWaterCard from "./PlantWaterCard";
 
-
-
-export default function PlantProgressCard({plant}) {
+export default function PlantProgressCard({ plant }) {
   return (
-     <View style={styles.progressCard}>
-
+    <View style={styles.progressCard}>
       <View style={styles.header}>
         <View style={styles.leftSection}>
           <View style={styles.iconContainer}>
@@ -29,8 +27,9 @@ export default function PlantProgressCard({plant}) {
           style={[styles.progressBarFill, { width: `${plant.progress}%` }]}
         />
       </View>
+      
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -100,4 +99,3 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
 });
-

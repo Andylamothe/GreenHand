@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PlantDetailsScreen from "./PlantDetailsScreen";
+import { api } from "../api/axiosInstance";
 
 import {
   View,
@@ -46,6 +47,17 @@ export default function InventoryScreen() {
     const cat = allCategories.find((c) => c._id === id);
     return cat ? cat["Plant Name"] : "Catégorie inconnue";
   };
+
+  const handleDeletePlant = async (plantId) => {
+  try {
+    await InventoryApi.deletePlant(plantId);
+
+    setInventory((prev) => prev.filter((p) => p._id !== plantId));
+    setOriginalInventory((prev) => prev.filter((p) => p._id !== plantId));
+  } catch (err) {
+    console.log("Erreur suppression plante:", err);
+  }
+};
 
   const loadInventory = async () => {
     try {
@@ -161,6 +173,7 @@ export default function InventoryScreen() {
                 setSelectedPlantId(plant._id);
                 setActiveScreen("details");
               }}
+              onDelete={handleDeletePlant}
             />
           ))}
         </View>
