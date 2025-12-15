@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
 
   backIcon: {
-    color: "white",
+    color: "#F4F7E8",
     fontSize: 14,
     marginRight: 6,
     fontWeight: "bold",
@@ -27,7 +27,7 @@ export default StyleSheet.create({
   },
 
   backText: {
-    color: "white",
+    color: "#F4F7E8",
     fontSize: 14,
   },
 
@@ -36,7 +36,7 @@ export default StyleSheet.create({
   },
 
   title: {
-    color: "white",
+    color: "#F4F7E8",
     fontSize: 22,
     marginBottom: 20,
   },
@@ -46,14 +46,14 @@ export default StyleSheet.create({
     padding: 15,
     borderRadius: 20,
     marginBottom: 20,
-    color: "white",
+    color: "#F4F7E8",
   },
 
   descriptionInput: {
     backgroundColor: "rgba(255,255,255,0.2)",
     padding: 25,
     borderRadius: 20,
-    color: "white",
+    color: "#F4F7E8",
     height: 120,
   },
 
@@ -77,12 +77,12 @@ export default StyleSheet.create({
   },
 
   categoryText: {
-    color: "white",
+    color: "#F4F7E8",
     fontSize: 18,
   },
 
   dateText: {
-    color: "white"
+    color: "#F4F7E8"
   },
 
   bottomSpace: {

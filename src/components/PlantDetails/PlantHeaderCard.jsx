@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    color: "white",
+    color: "#F4F7E8",
     marginBottom: 10,
     fontSize: 16,
   },

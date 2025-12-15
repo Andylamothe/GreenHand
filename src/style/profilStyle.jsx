@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
   },
 
   name: {
-    color: "white",
+    color: "#F4F7E8",
     fontSize: 22,
     fontWeight: "600",
   },
@@ -80,17 +80,17 @@ export const styles = StyleSheet.create({
   },
 
   menuText: {
-    color: "white",
+    color: "#F4F7E8",
     fontSize: 16,
   },
   sectionTitle: {
-  color: "white",
+  color: "#F4F7E8",
   fontSize: 20,
   fontWeight: "600",
   marginBottom: 20,
 },
 sectionTitle1: {
-  color: "white",
+  color: "#F4F7E8",
   fontSize: 20,
   fontWeight: "600",
   marginBottom: 12,
@@ -103,7 +103,7 @@ scrollContent: {
 },
 
 feedbackText: {
-  color: "white",
+  color: "#F4F7E8",
   textAlign: "center",
   marginTop: 12,
 },
@@ -290,13 +290,13 @@ notificationLeft: {
 },
 
 notificationText: {
-  color: "white",
+  color: "#F4F7E8",
   fontSize: 16,
   marginLeft: 12,
 },
 
 helpQuestion: {
-  color: "#FFFFFF",
+  color: "#F4F7E8",
   fontWeight: "700",
   
 },
@@ -308,7 +308,7 @@ helpAnswer: {
 },
 
 helpText: {
-  color: "#FFFFFF",
+  color: "#F4F7E8",
   marginLeft: 12,
   fontSize: 17,
   

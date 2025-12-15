@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   toolbar: { position: 'absolute', bottom: 130, left: 0, right: 0, paddingHorizontal: 24, flexDirection: 'row', justifyContent: 'space-between' },
   btn: { paddingHorizontal: 18, paddingVertical: 10, borderRadius: 12, backgroundColor: 'rgba(0,0,0,0.5)' },
-  btnText: { color: 'white', fontSize: 16, fontWeight: '600' },
+  btnText: { color: '#F4F7E8', fontSize: 16, fontWeight: '600' },
   shutter: { alignSelf: 'center' },
   preview: { position: 'absolute', top: 48, right: 16, alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.9)', padding: 8, borderRadius: 10 }
 });

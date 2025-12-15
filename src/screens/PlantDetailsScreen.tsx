@@ -88,7 +88,7 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
           />
 
           <View style={{ width: "100%", marginBottom: 20 }}>
-            <Text style={{ color: "white", marginLeft: 20 }}>{plant.description} </Text>
+            <Text style={{ color: "#F4F7E8", marginLeft: 20 }}>{plant.description} </Text>
           </View>
 
           <View style={{ width: "100%", marginBottom: 10 }}>
