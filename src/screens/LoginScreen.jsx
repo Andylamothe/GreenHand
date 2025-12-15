@@ -13,7 +13,7 @@ import { styles } from "../style/global";
 import { AuthApi } from "../api/userApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginScreen = ({ onLoginSuccess }) => {
+const LoginScreen = ({ onLoginSuccess, setUser }) => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -31,6 +31,8 @@ const LoginScreen = ({ onLoginSuccess }) => {
       const { token, user } = res.data;
 
       await AsyncStorage.setItem("token", token);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
       console.log("Logged in user:", user);
       onLoginSuccess();
     } catch (err) {
