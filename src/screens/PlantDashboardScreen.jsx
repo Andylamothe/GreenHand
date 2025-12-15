@@ -9,7 +9,7 @@ import {
 
 import { BarChart } from "react-native-chart-kit";
 import { styles } from "../style/global";
-import { getPlantData } from "../services/plantService";
+import { getPlantDashboard } from "../services/plantService";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -22,6 +22,7 @@ const greenChartConfig = {
   decimalPlaces: 1,
   color: () => "#7f9e4dff",
   labelColor: () => "#4a5714ff",
+
   propsForBackgroundLines: {
     stroke: "#7f9e4dff",
   },
@@ -35,8 +36,16 @@ export default function PlantDashboardScreen() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await getPlantData();
-        setData(res);
+        const res = await getPlantDashboard();
+        setData({
+          avg_npk: res.avg_npk || [],
+          rain_temp: res.rain_temp || [],
+          ph: res.ph || [],
+          fert_long: res.fert_long || [],
+          soil_crop: res.soil_crop || [],
+        });
+
+        console.log("DASHBOARD DATA:", res);
       } catch (e) {
         console.error("FETCH ERROR", e);
         setError("Erreur lors du chargement des données plantes");
@@ -176,7 +185,6 @@ export default function PlantDashboardScreen() {
           />
         </View>
 
-        {/* FERTILIZERS */}
         {/* FERTILIZERS */}
         <View style={styles.weatherCard}>
           <Text style={styles.weatherTitle}>

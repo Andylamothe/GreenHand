@@ -3,11 +3,11 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { Home, Package, MessageCircle, User, BarChart3 } from 'lucide-react-native';
 import { styles } from '../style/global';
  
-export function Navigation({ activeScreen, setActiveScreen }) {
+export default function Navigation({ activeScreen, setActiveScreen }) {
   const navItems = [
     { id: 'home', icon: Home, label: 'Home' },
     { id: 'inventory', icon: Package, label: 'Inventory' },
-    { id: 'dashboards', icon: BarChart3, label: 'Dash' },
+    { id: 'plantDashBoard', icon: BarChart3, label: 'Dash' },
     { id: 'chatbot', icon: MessageCircle, label: 'Chat' },
     { id: 'profile', icon: User, label: 'Profile' },
   ];
@@ -38,5 +38,5 @@ export function Navigation({ activeScreen, setActiveScreen }) {
   );
 }
 
-export default Navigation;
+
  

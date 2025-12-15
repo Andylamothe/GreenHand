@@ -11,8 +11,6 @@ import StartScreen from "./src/screens/StartScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
-// import { Profile } from './components/Profile';
-// import { PlantDetail } from './components/PlantDetail';
 import Navigation from "./src/components/Navigation";
 import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
 import { styles } from "./src/style/global";
@@ -30,8 +28,6 @@ import ProfileScreen from "./src/screens/ProfileScreen";
 import Navigation from "./src/components/Navigation";
 import { styles } from "./src/style/global";
 import InventoryScreen from "./src/screens/InventoryScreen";
-import LoginScreen from "./src/screens/LoginScreen";
-import Dashboards from "./src/screens/Dashboards";
 
 
 export default function App() {
@@ -101,7 +97,7 @@ const handleUserUpdate = async (updatedUser) => {
   if (isAuthenticated) {
     return (
       <View style={styles.container}>
-        {screen === "home" && <HomeScreen />}
+        {screen === "home" && <HomeScreen setScreen={setScreen} />}
         {screen === "inventory" && <InventoryScreen />}
         {screen === "chatbot" && <ChatbotScreen />}
         {screen === "dashboards" && <Dashboards />}
@@ -113,6 +109,8 @@ const handleUserUpdate = async (updatedUser) => {
         {screen === "admin" && (<AdminPanelScreen goBack={() => setScreen("profile")}/>)}
 
 
+        {screen === "plantDashBoard" && <PlantDashboardScreen />}
+        {screen === "weatherDashboard" && <WeatherDashboard />}
 
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
