@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { styles } from "../style/global";
+import { Sprout } from "lucide-react-native";
 
 const StartScreen = ({ goToLogin, goToRegister }) => {
   return (
@@ -12,7 +13,7 @@ const StartScreen = ({ goToLogin, goToRegister }) => {
           <Text style={styles.welcomeText}>Welcome to</Text>
           <Text style={styles.farmerText}>GreenHand</Text>
         </View>
-        <Icon name="leaf" size={40} color="#fff" />
+        <Sprout size={40} color="#fff" style={{ marginLeft: "auto" }} />
       </View>
 
       <View style={{ padding: 20 }}>

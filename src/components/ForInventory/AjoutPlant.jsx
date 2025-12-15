@@ -56,13 +56,10 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
 
   return (
     <View style={[styles.container, ajoutStyles.screen]}>
-
- 
       <TouchableOpacity onPress={onBack} style={ajoutStyles.backButton}>
         <Text style={ajoutStyles.backIcon}>⬅</Text>
         <Text style={ajoutStyles.backText}>Retour</Text>
       </TouchableOpacity>
-
 
       {step === 1 && (
         <View style={ajoutStyles.stepContainer}>
@@ -86,7 +83,6 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
           </TouchableOpacity>
         </View>
       )}
-
 
       {step === 2 && (
         <View style={[ajoutStyles.stepContainer, { flex: 1 }]}>
@@ -131,7 +127,6 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
                 </TouchableOpacity>
               ))}
 
-
             <TouchableOpacity
               style={[styles.nextButton, ajoutStyles.bottomSpace]}
               onPress={() => selectedCategory && setStep(3)}
@@ -141,7 +136,6 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
           </ScrollView>
         </View>
       )}
-
 
       {step === 3 && (
         <View style={ajoutStyles.stepContainer}>
@@ -166,7 +160,6 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
         </View>
       )}
 
-
       {step === 4 && (
         <View style={ajoutStyles.stepContainer}>
           <Text style={ajoutStyles.title}>Dernière date d'arrosage</Text>
@@ -187,10 +180,10 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
               value={lastWatered ? new Date(lastWatered) : new Date()}
               mode="date"
               maximumDate={new Date()}
-              display="calendar"
-              onChange={(selectedDate) => {
+
+              onChange={(event, date) => {
                 setShowPicker(false);
-                if (selectedDate) setLastWatered(selectedDate.toISOString());
+                if (date) setLastWatered(date.toISOString());
               }}
             />
           )}

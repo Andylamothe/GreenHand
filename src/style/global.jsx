@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#5F8550',
+    backgroundColor: "#8FA954",
   },
   scrollContent: {
     padding: 20,

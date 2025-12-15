@@ -3,7 +3,7 @@ import { TokenService } from "./tokenService";
 
 export const api = axios.create({
     //url de l'ordi 
-    baseURL: "http://10.0.0.253:3000/api", 
+    baseURL: "http://192.168.68.105:3000/api", 
 });
 
 api.interceptors.request.use(async (config) => {
