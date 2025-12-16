@@ -7,15 +7,18 @@ export const styles = StyleSheet.create({
   },
 
   content: {
-    padding: 20,
+    marginTop: 20,
+    padding: 40,
     paddingBottom: 40,
   },
 
   profileCard: {
     backgroundColor: "rgba(255,255,255,0.15)",
-    borderRadius: 28,
-    padding: 20,
-    marginBottom: 24,
+    borderRadius: 32,
+    padding: 24,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
   },
 
   profileRow: {
@@ -45,19 +48,23 @@ export const styles = StyleSheet.create({
   },
 
   menuCard: {
-    backgroundColor: "rgba(255,255,255,0.12)",
-    borderRadius: 28,
-    padding: 16,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    borderRadius: 32,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
   },
 
   menuItem: {
-    backgroundColor: "rgba(255,255,255,0.18)",
-    borderRadius: 20,
-    padding: 16,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    borderRadius: 24,
+    padding: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.15)",
   },
 
   menuItemDanger: {
