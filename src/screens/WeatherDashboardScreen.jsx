@@ -5,6 +5,7 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { LineChart, BarChart } from "react-native-chart-kit";
 import { getWeatherDashboard } from "../services/weatherService";
@@ -43,7 +44,13 @@ export default function WeatherDashboard() {
         setData(res);
       } catch (e) {
         console.error("FETCH ERROR", e);
-        setError("Erreur lors du chargement des données météo");
+        // Check if it's a 503 Service Unavailable error
+        let errorMsg = "Erreur lors du chargement des données météo";
+        if (e.response?.status === 503) {
+          errorMsg = "Fonctionnalité indisponible en production. Les graphiques météo ne sont accessibles qu'en développement local.";
+        }
+        setError(errorMsg);
+        Alert.alert("⚠️ Erreur", errorMsg, [{ text: "OK" }]);
       } finally {
         setLoading(false);
       }
@@ -63,7 +70,9 @@ export default function WeatherDashboard() {
   if (error) {
     return (
       <View style={styles.container}>
-        <Text style={{ color: "red", textAlign: "center" }}>{error}</Text>
+        <Text style={{ color: "red", textAlign: "center", fontSize: 16, marginHorizontal: 20 }}>
+          ⚠️ {error}
+        </Text>
       </View>
     );
   }
