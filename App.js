@@ -5,7 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Home } from './components/Home';
 
 // import { Inventory } from './components/Inventory';
-import ChatbotScreen from "./src/screens/ChatbotScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
 import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
