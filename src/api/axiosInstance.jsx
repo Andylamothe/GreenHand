@@ -14,14 +14,16 @@ api.interceptors.request.use(async (config) => {
         console.log("Authorization header set");
     }
 
-    return config;
-})
+  return config;
+});
 
 api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-        console.error("API Error:", error.response ? error.response.data : error.message);
-        throw error;
-    }
+  (response) => response,
+  (error) => {
+    console.error(
+      "API Error:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
 );
-

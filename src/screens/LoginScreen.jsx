@@ -6,17 +6,21 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/Feather";
 import { styles } from "../style/global";
 import { AuthApi } from "../api/userApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ArrowLeft } from "lucide-react-native";
+import Icon from "react-native-vector-icons/Feather";
 
-const LoginScreen = ({ onLoginSuccess, setUser }) => {
+const LoginScreen = ({ onLoginSuccess, setUser, setActiveScreen }) => {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
 
   const handleChange = (field, value) => setForm({ ...form, [field]: value });
 
@@ -54,8 +58,20 @@ const LoginScreen = ({ onLoginSuccess, setUser }) => {
     }
   };
 
+  const handleBack = () => {
+    setActiveScreen("start");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles1.headerContainer}>
+        <TouchableOpacity onPress={handleBack} style={styles1.backButton}>
+          <ArrowLeft color="#FFF" size={24} />
+        </TouchableOpacity>
+
+        <View style={styles1.titleRow}></View>
+      </View>
+
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Title */}
         <View style={[styles.welcomeCard, { marginTop: 30 }]}>
@@ -96,15 +112,28 @@ const LoginScreen = ({ onLoginSuccess, setUser }) => {
             <View style={styles.tipIconContainer}>
               <Icon name="lock" size={20} color="#fff" />
             </View>
-            <View style={styles.tipTextContainer}>
+
+            <View
+              style={{ flex: 1, flexDirection: "row", alignItems: "center" }}
+            >
               <TextInput
                 placeholder="Password"
-                secureTextEntry
                 placeholderTextColor="rgba(255,255,255,0.7)"
-                style={styles.input}
+                style={[styles.input, { flex: 1, color: "#fff" }]}
+                secureTextEntry={!showPassword}
                 value={form.password}
                 onChangeText={(v) => handleChange("password", v)}
               />
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={{ padding: 5 }}
+              >
+                <Icon
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={20}
+                  color="#fff"
+                />
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -127,3 +156,22 @@ const LoginScreen = ({ onLoginSuccess, setUser }) => {
 };
 
 export default LoginScreen;
+
+const styles1 = StyleSheet.create({
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: 20,
+    marginLeft: 20,
+  },
+
+  backButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 17,
+  },
+});
