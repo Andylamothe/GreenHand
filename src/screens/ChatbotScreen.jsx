@@ -40,7 +40,7 @@ const ChatbotScreen = ({ user }) => {
   const flatListRef = useRef(null);
 
   // Guard clause - user must be authenticated
-  if (!user?._id) {
+  if (!user) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -50,7 +50,7 @@ const ChatbotScreen = ({ user }) => {
     );
   }
 
-  const userId = user._id;
+  const userId = user._id || user.id;
 
   // Effects
   useEffect(() => {
