@@ -30,10 +30,21 @@ const LoginScreen = ({ onLoginSuccess, setUser }) => {
       });
       const { token, user } = res.data;
 
-      await AsyncStorage.setItem("token", token);
-      await AsyncStorage.setItem("user", JSON.stringify(user));
+      console.log("Token reçu du serveur:", token);
+      
+      // Sauvegarder AVANT d'appeler onLoginSuccess()
+      await Promise.all([
+        AsyncStorage.setItem("token", token),
+        AsyncStorage.setItem("user", JSON.stringify(user))
+      ]);
+      
+      const storedToken = await AsyncStorage.getItem("token");
+      console.log("Token vérifié en AsyncStorage:", storedToken);
+      
       setUser(user);
       console.log("Logged in user:", user);
+      
+      // Appeler onLoginSuccess() APRÈS avoir sauvegardé
       onLoginSuccess();
     } catch (err) {
       console.log("Login error:", err.response?.data || err.message);

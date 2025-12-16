@@ -3,13 +3,15 @@ import { TokenService } from "./tokenService";
 
 export const api = axios.create({
     //url de l'ordi 
-    baseURL: "http://10.0.0.74:3100/api", 
+    baseURL: "https://greenhandwebservice.onrender.com/api", 
 });
 
 api.interceptors.request.use(async (config) => {
     const token = await TokenService.getToken();
+    console.log("Token retrieved:", token ? "✓ Token exists" : "✗ No token");
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+        console.log("Authorization header set");
     }
 
     return config;
