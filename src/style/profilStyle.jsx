@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#8FA954",
+     backgroundColor: "#5F8550",
   },
 
   content: {
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 20,
-    backgroundColor: "#A9C46C",
+    backgroundColor: "#b9ca907a",
     justifyContent: "center",
     alignItems: "center",
     marginRight: 16,
@@ -185,7 +185,7 @@ accountInputDisabled: {
 
 saveAccountButton: {
   marginTop: 16,
-  backgroundColor: "#A9C46C",
+  backgroundColor: "#98ad68ff",
   paddingVertical: 18,
   borderRadius: 28,
   alignItems: "center",
@@ -199,8 +199,8 @@ saveAccountText: {
 deleteOutlineButton: {
   marginTop: 32,
   borderWidth: 1,
-  borderColor: "#8B0000",
-  backgroundColor:"#8B0000",
+  borderColor: "#7c3a3aff",
+  backgroundColor:"#7c3a3aff",
   paddingVertical: 14,
   borderRadius: 24,
   alignItems: "center",
@@ -245,24 +245,44 @@ cancelDelete: {
 },
 
 modalOverlay: {
-  flex: 1,
+  flex: 4,
+  backgroundColor: "rgba(0,0,0,0.5)", 
   justifyContent: "center",
-  alignItems: "center",
   padding: 20,
+  
 },
 
-modalCard: {
+modalContent: {
   width: "100%",
   maxWidth: 380,
-  backgroundColor: "rgba(101, 16, 16, 0.82)",
-  borderRadius: 28,
+  backgroundColor: "#8b9c63ff",
+  borderRadius: 20,
   padding: 24,
-  borderWidth: 1,
-  borderColor: "rgba(255,255,255,0.25)",
+},
+
+input: {
+  backgroundColor: "#ffffff",
+  color: "#918888",
+  padding: 10,
+  borderRadius: 10,
+  marginBottom: 20,
+},
+
+saveButton: {
+   backgroundColor: "#8B0000",
+  padding: 12,
+  borderRadius: 10,
+  alignItems: "center",
+},
+
+saveButtonText: {
+  color: "#ffffffff",
+  fontWeight: "700",
+  fontSize: 16,
 },
 
 modalTitle: {
-  color: "#ffffffff",
+  color: "#F4F7E8",
   fontSize: 16,
   fontWeight: "700",
   textAlign: "center",
@@ -272,8 +292,10 @@ modalTitle: {
 modalCancel: {
   marginTop: 16,
   textAlign: "center",
-  color: "rgba(255,255,255,0.8)",
+  color: "#fff",
 },
+
+
 notificationRow: {
   flexDirection: "row",
   alignItems: "center",
