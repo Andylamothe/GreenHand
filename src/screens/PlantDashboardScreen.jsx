@@ -5,6 +5,7 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 
 import { BarChart } from "react-native-chart-kit";
@@ -48,7 +49,13 @@ export default function PlantDashboardScreen() {
         console.log("DASHBOARD DATA:", res);
       } catch (e) {
         console.error("FETCH ERROR", e);
-        setError("Erreur lors du chargement des données plantes");
+        // Check if it's a 503 Service Unavailable error
+        let errorMsg = "Erreur lors du chargement des données plantes";
+        if (e.response?.status === 503) {
+          errorMsg = "Fonctionnalité indisponible en production. Les graphiques des plantes ne sont accessibles qu'en développement local.";
+        }
+        setError(errorMsg);
+        Alert.alert("⚠️ Erreur", errorMsg, [{ text: "OK" }]);
       } finally {
         setLoading(false);
       }
@@ -68,8 +75,8 @@ export default function PlantDashboardScreen() {
   if (error || !data) {
     return (
       <View style={styles.container}>
-        <Text style={{ color: "red", textAlign: "center" }}>
-          {error || "No data found"}
+        <Text style={{ color: "red", textAlign: "center", fontSize: 16, marginHorizontal: 20 }}>
+          ⚠️ {error || "No data found"}
         </Text>
       </View>
     );

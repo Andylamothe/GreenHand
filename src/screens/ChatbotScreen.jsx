@@ -40,7 +40,7 @@ const ChatbotScreen = ({ user }) => {
   const flatListRef = useRef(null);
 
   // Guard clause - user must be authenticated
-  if (!user?._id) {
+  if (!user) {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -50,7 +50,7 @@ const ChatbotScreen = ({ user }) => {
     );
   }
 
-  const userId = user._id;
+  const userId = user._id || user.id;
 
   // Effects
   useEffect(() => {
@@ -235,8 +235,10 @@ const ChatbotScreen = ({ user }) => {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 0}
       >
         {/* Header */}
-        <View style={headerStyles.container}>
-          <View style={styles.welcomeTextContainer}>
+ 
+        
+        <View style={[styles.welcomeCard, { marginTop: 60 }]}>
+                  <View style={{ flex: 1 }}>
             <Text style={[styles.farmerText, { fontSize: 24 }]}>GreenBot</Text>
             <Text style={styles.welcomeText}>Ton assistant agricole</Text>
           </View>
