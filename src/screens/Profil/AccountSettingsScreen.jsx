@@ -28,10 +28,10 @@ export default function AccountSettingsScreen({
   const [newPassword, setNewPassword] = useState("");
   const [deletePassword, setDeletePassword] = useState("");
   const [showDelete, setShowDelete] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
 
   useEffect(() => {
     if (user) {
@@ -46,40 +46,37 @@ export default function AccountSettingsScreen({
     setForm({ ...form, [field]: value });
   };
 
+  const handleSave = async () => {
+    const payload = {};
 
- const handleSave = async () => {
-  const payload = {};
+    if (form.username !== user.username) payload.username = form.username;
+    if (form.location !== user.location) payload.location = form.location;
 
-  if (form.username !== user.username) payload.username = form.username;
-  if (form.location !== user.location) payload.location = form.location;
+    if (Object.keys(payload).length === 0) {
+      setMessage("No changes to update");
+      return;
+    }
 
-  if (Object.keys(payload).length === 0) {
-    setMessage("No changes to update");
-    return;
-  }
+    setLoading(true);
+    setMessage("");
 
-  setLoading(true);
-  setMessage("");
+    try {
+      await UserApi.updateMe(payload);
 
-  try {
-    await UserApi.updateMe(payload);
+      const meRes = await UserApi.me();
+      const freshUser = meRes.data.user;
 
-    const meRes = await UserApi.me();
-    const freshUser = meRes.data.user; 
+      await AsyncStorage.setItem("user", JSON.stringify(freshUser));
+      onUserUpdate(freshUser);
 
-    await AsyncStorage.setItem("user", JSON.stringify(freshUser));
-    onUserUpdate(freshUser);
-
-    setMessage("Profile updated successfully ");
-  } catch (err) {
-    console.log("UPDATE ERROR:", err?.response?.data || err.message);
-    setMessage("Update failed ");
-  } finally {
-    setLoading(false);
-  }
-};
-
-
+      setMessage("Profile updated successfully ");
+    } catch (err) {
+      console.log("UPDATE ERROR:", err?.response?.data || err.message);
+      setMessage("Update failed ");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePasswordChange = async () => {
     if (!newPassword) {
@@ -94,7 +91,6 @@ export default function AccountSettingsScreen({
       await UserApi.updateMe({ password: newPassword });
       setNewPassword("");
       setMessage("Password updated successfully");
-      
     } catch (err) {
       setMessage("Password update failed ");
     } finally {
@@ -102,32 +98,30 @@ export default function AccountSettingsScreen({
     }
   };
 
+  const handleDeleteAccount = async () => {
+    if (!deletePassword) {
+      setMessage("Please enter your password to confirm");
+      return;
+    }
 
- const handleDeleteAccount = async () => {
-  if (!deletePassword) {
-    setMessage("Please enter your password to confirm");
-    return;
-  }
+    setLoading(true);
+    setMessage("");
 
-  setLoading(true);
-  setMessage("");
+    try {
+      await UserApi.deleteMe();
+    } catch (err) {
+      console.log(
+        "Delete API error (ignored):",
+        err?.response?.data || err.message
+      );
+    } finally {
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("user");
 
-  try {
-    await UserApi.deleteMe();
-  } catch (err) {
-
-    console.log("Delete API error (ignored):", err?.response?.data || err.message);
-  } finally {
-
-    await AsyncStorage.removeItem("token");
-    await AsyncStorage.removeItem("user");
-
-    setShowDelete(false);
-    onLogout(); 
-  }
-};
-
-
+      setShowDelete(false);
+      onLogout();
+    }
+  };
 
   if (!user) {
     return (
@@ -143,7 +137,6 @@ export default function AccountSettingsScreen({
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-       
         <View style={styles.accountHeader}>
           <TouchableOpacity onPress={goBack} style={styles.backButton}>
             <Feather name="arrow-left" size={20} color="white" />
@@ -151,7 +144,6 @@ export default function AccountSettingsScreen({
           <Text style={styles.accountTitle}>Account Settings</Text>
         </View>
 
-        
         <View style={styles.accountCard}>
           <View style={styles.accountField}>
             <Feather name="mail" size={18} color="white" />
@@ -185,7 +177,6 @@ export default function AccountSettingsScreen({
           </View>
         </View>
 
-       
         <View style={styles.accountCard}>
           <View style={styles.accountField}>
             <Feather name="lock" size={18} color="white" />
@@ -200,7 +191,7 @@ export default function AccountSettingsScreen({
           </View>
 
           <TouchableOpacity
-            style={[styles.saveAccountButton, { backgroundColor: "#6B8E23" }]}
+            style={[styles.saveAccountButton, { backgroundColor: "#6a8e23a1" }]}
             onPress={handlePasswordChange}
             disabled={loading}
           >
@@ -208,7 +199,6 @@ export default function AccountSettingsScreen({
           </TouchableOpacity>
         </View>
 
-      
         <TouchableOpacity
           style={styles.saveAccountButton}
           onPress={handleSave}
@@ -217,9 +207,7 @@ export default function AccountSettingsScreen({
           <Text style={styles.saveAccountText}>Save Changes</Text>
         </TouchableOpacity>
 
-        {message !== "" && (
-          <Text style={styles.feedbackText}>{message}</Text>
-        )}
+        {message !== "" && <Text style={styles.feedbackText}>{message}</Text>}
 
         <TouchableOpacity
           style={styles.deleteOutlineButton}
@@ -229,49 +217,44 @@ export default function AccountSettingsScreen({
         </TouchableOpacity>
       </ScrollView>
 
- 
-
-    <Modal
+      <Modal
+        visible={showDelete}
         transparent
         animationType="fade"
-        visible={showDelete}
         onRequestClose={() => setShowDelete(false)}
-        >
+      >
         <View style={styles.modalOverlay}>
-            <View style={styles.modalCard}>
-            <Text style={styles.modalTitle}>
-                This action is irreversible
-            </Text>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>This action is irreversible</Text>
 
             <View style={styles.accountField}>
-                <Feather name="lock" size={18} color="white" />
-                <TextInput
+              <Feather name="lock" size={18} color="white" />
+              <TextInput
                 placeholder="Type your password to confirm"
                 secureTextEntry
                 value={deletePassword}
                 onChangeText={setDeletePassword}
-                placeholderTextColor="rgba(255,255,255,0.6)"
-                style={styles.accountInput}
-                />
+                placeholderTextColor="rgba(255, 255, 255, 1)"
+                // style={styles.input} 
+              />
             </View>
 
             <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={handleDeleteAccount}
-                disabled={loading}
+              style={styles.saveButton} 
+              onPress={handleDeleteAccount}
+              disabled={loading}
             >
-                <Text style={styles.deleteText}>
+              <Text style={styles.saveButtonText}>
                 {loading ? "Deleting..." : "Confirm Delete"}
-                </Text>
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setShowDelete(false)}>
-                <Text style={styles.modalCancel}>Cancel</Text>
+              <Text style={styles.modalCancel}>Cancel</Text>
             </TouchableOpacity>
-            </View>
+          </View>
         </View>
-        </Modal>
-
+      </Modal>
     </View>
   );
 }

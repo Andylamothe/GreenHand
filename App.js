@@ -5,11 +5,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { Home } from './components/Home';
 
 // import { Inventory } from './components/Inventory';
-import ChatbotScreen from "./src/screens/ChatbotScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
 import WeatherDashboard from "./src/screens/WeatherDashboardScreen";
- import ChatbotScreen from './src/screens/ChatbotScreen';
+import ChatbotScreen from "./src/screens/ChatbotScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import StartScreen from "./src/screens/StartScreen";
 import RegistrationScreen from "./src/screens/RegistrationScreen";
@@ -24,40 +23,36 @@ import Navigation from "./src/components/Navigation";
 import { styles } from "./src/style/global";
 import InventoryScreen from "./src/screens/InventoryScreen";
 
-
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [screen, setScreen] = useState("start");
   const [user, setUser] = useState(null);
 
-
   const handleLogout = async () => {
-  try {
-    await UserApi.logout(); 
-  } catch (err) {
-    console.log("Logout API error:", err.message);
-  } finally {
-    await AsyncStorage.removeItem("token");
-    await AsyncStorage.removeItem("user");
+    try {
+      await UserApi.logout();
+    } catch (err) {
+      console.log("Logout API error:", err.message);
+    } finally {
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("user");
 
-    setUser(null);
-    setIsAuthenticated(false);
-    setScreen("start");
-  }
-};
+      setUser(null);
+      setIsAuthenticated(false);
+      setScreen("start");
+    }
+  };
 
-const refreshUser = async () => {
-  const res = await UserApi.me();
-  setUser(res.data);
-  await AsyncStorage.setItem("user", JSON.stringify(res.data));
-};
+  const refreshUser = async () => {
+    const res = await UserApi.me();
+    setUser(res.data);
+    await AsyncStorage.setItem("user", JSON.stringify(res.data));
+  };
 
-
-const handleUserUpdate = async (updatedUser) => {
-  setUser(updatedUser);
-  await AsyncStorage.setItem("user", JSON.stringify(updatedUser));
-};
-
+  const handleUserUpdate = async (updatedUser) => {
+    setUser(updatedUser);
+    await AsyncStorage.setItem("user", JSON.stringify(updatedUser));
+  };
 
   //check le token au debut
   useEffect(() => {
@@ -65,12 +60,11 @@ const handleUserUpdate = async (updatedUser) => {
       const token = await AsyncStorage.getItem("token");
       const storedUser = await AsyncStorage.getItem("user");
       if (token && storedUser) {
-      setUser(JSON.parse(storedUser)); 
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  
+        setUser(JSON.parse(storedUser));
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
     };
     verifyToken();
   }, []);
@@ -96,13 +90,34 @@ const handleUserUpdate = async (updatedUser) => {
         {screen === "inventory" && <InventoryScreen />}
         {screen === "chatbot" && <ChatbotScreen user={user} />}
         {screen === "dashboards" && <Dashboards />}
-        {screen === "profile" && (<ProfileScreen user={user} onLogout={handleLogout} goToAccount={() => setScreen("account")}  
-        goToNotifications={() => setScreen("notifications")} goToHelp={() => setScreen("help")} goToAdmin={() => setScreen("admin")}/>)}
-        {screen === "account" && (<AccountSettingsScreen user={user} onUserUpdate={handleUserUpdate} goBack={() => setScreen("profile")}  onLogout={handleLogout} refreshUser={refreshUser}/>)}
-        {screen === "notifications" && (<NotificationsScreen goBack={() => setScreen("profile")} />)}
-        {screen === "help" && (<HelpSupportScreen goBack={() => setScreen("profile")} />)}
-        {screen === "admin" && (<AdminPanelScreen goBack={() => setScreen("profile")}/>)}
-
+        {screen === "profile" && (
+          <ProfileScreen
+            user={user}
+            onLogout={handleLogout}
+            goToAccount={() => setScreen("account")}
+            goToNotifications={() => setScreen("notifications")}
+            goToHelp={() => setScreen("help")}
+            goToAdmin={() => setScreen("admin")}
+          />
+        )}
+        {screen === "account" && (
+          <AccountSettingsScreen
+            user={user}
+            onUserUpdate={handleUserUpdate}
+            goBack={() => setScreen("profile")}
+            onLogout={handleLogout}
+            refreshUser={refreshUser}
+          />
+        )}
+        {screen === "notifications" && (
+          <NotificationsScreen goBack={() => setScreen("profile")} />
+        )}
+        {screen === "help" && (
+          <HelpSupportScreen goBack={() => setScreen("profile")} />
+        )}
+        {screen === "admin" && (
+          <AdminPanelScreen goBack={() => setScreen("profile")} />
+        )}
 
         {screen === "plantDashBoard" && <PlantDashboardScreen />}
         {screen === "weatherDashboard" && <WeatherDashboard />}
@@ -121,21 +136,21 @@ const handleUserUpdate = async (updatedUser) => {
           goToRegister={() => setScreen("register")}
         />
       );
-
     case "login":
       return (
         <LoginScreen
           setUser={setUser}
+          setActiveScreen={setScreen}
           onLoginSuccess={() => {
             setIsAuthenticated(true);
             setScreen("home");
-            
           }}
         />
       );
 
     case "register":
-      return <RegistrationScreen goToLogin={() => setScreen("login")} />;
+      return <RegistrationScreen goToLogin={() => setScreen("login")} 
+        setActiveScreen={setScreen}/>;
 
     default:
       return null;
