@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Home, Package, MessageCircle, User, BarChart3 } from 'lucide-react-native';
-import { styles } from '../style/global';
+import { createGlobalStyles } from '../style/global';
+import { useTheme } from '../context/ThemeContext';
  
 export default function Navigation({ activeScreen, setActiveScreen }) {
+  const { theme } = useTheme();
+  const styles = createGlobalStyles(theme);
   const navItems = [
     { id: 'home', icon: Home, label: 'Home' },
     { id: 'inventory', icon: Package, label: 'Inventory' },
@@ -24,7 +27,7 @@ export default function Navigation({ activeScreen, setActiveScreen }) {
             style={[styles.navItem, isActive && styles.navItemActive]}
           >
             <Icon
-              color="#FFFFFF"
+              color={theme.colors.text}
               size={24}
               style={styles.navIcon}
             />

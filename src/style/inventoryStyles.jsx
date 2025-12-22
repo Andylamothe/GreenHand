@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
+export const createInventoryStyles = (theme) => StyleSheet.create({
   screen: {
     flex: 1,
   },
@@ -11,33 +11,33 @@ export default StyleSheet.create({
   },
 
   headerCard: {
-    backgroundColor: "rgba(255,255,255,0.15)",
+    backgroundColor: theme.colors.card,
     borderRadius: 32,
     padding: 24,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.2)",
+    borderColor: theme.colors.cardBorder,
   },
 
   title: {
     fontSize: 26,
     fontWeight: "bold",
-    color: "#fff",
+    color: theme.colors.text,
     marginBottom: 16,
   },
 
   searchBar: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.15)",
+    backgroundColor: theme.colors.card,
     borderRadius: 20,
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.25)",
+    borderColor: theme.colors.cardBorder,
   },
 
   searchInput: {
-    color: "#fff",
+    color: theme.colors.text,
     flex: 1,
   },
 
@@ -52,13 +52,13 @@ export default StyleSheet.create({
 
   emptyTitle: {
     fontSize: 18,
-    color: "white",
+    color: theme.colors.text,
     opacity: 0.8,
   },
 
   emptySubtitle: {
     fontSize: 14,
-    color: "white",
+    color: theme.colors.text,
     opacity: 0.7,
     marginTop: 8,
   },
@@ -71,6 +71,15 @@ export default StyleSheet.create({
 
   addIcon: {
     fontSize: 30,
-    color: "#fff",
+    color: theme.colors.text,
   },
+});
+
+export default createInventoryStyles({
+  name: 'dark',
+  colors: {
+    card: 'rgba(95, 133, 80, 0.4)',
+    cardBorder: 'rgba(169, 196, 108, 0.3)',
+    text: '#F4F7E8',
+  }
 });

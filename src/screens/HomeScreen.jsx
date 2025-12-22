@@ -7,12 +7,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { styles } from "../style/global";
+import { createGlobalStyles } from "../style/global";
+import { useTheme } from "../context/ThemeContext";
 import { getWeatherData } from "../utils/weatherAPI";
 import { Sprout } from "lucide-react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 const HomeScreen = ({ setScreen }) => {
+  const { theme } = useTheme();
+  const styles = createGlobalStyles(theme);
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

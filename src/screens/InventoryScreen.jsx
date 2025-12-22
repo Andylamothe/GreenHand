@@ -9,8 +9,9 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { styles } from "../style/global";
-import inventoryStyles from "../style/inventoryStyles";
+import { createGlobalStyles } from "../style/global";
+import { useTheme } from "../context/ThemeContext";
+import { createInventoryStyles } from "../style/inventoryStyles";
 import { InventoryApi } from "../api/inventoryApi";
 import { FilterButton } from "../components/ForInventory/FilterButton";
 import { Search } from "lucide-react-native";
@@ -19,6 +20,9 @@ import AjoutPlant from "../components/ForInventory/AjoutPlant";
 import { CategoryApi } from "../api/categoryAp";
 
 export default function InventoryScreen() {
+  const { theme } = useTheme();
+  const styles = createGlobalStyles(theme);
+  const inventoryStyles = createInventoryStyles(theme);
   const [inventory, setInventory] = useState([]);
   const [originalInventory, setOriginalInventory] = useState([]);
   const [categories, setCategories] = useState(["All"]);

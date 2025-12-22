@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { Home } from './components/Home';
 import { CameraProvider } from "./src/context/CameraContext";
+import { ThemeProvider, useTheme } from "./src/context/ThemeContext";
 // import { Inventory } from './components/Inventory';
 import LoginScreen from "./src/screens/LoginScreen";
 import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
@@ -24,9 +25,28 @@ import { styles } from "./src/style/global";
 import InventoryScreen from "./src/screens/InventoryScreen";
 
 export default function App() {
+  return (
+    <ThemeProvider>
+      <CameraProvider>
+        <AppContent />
+      </CameraProvider>
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
+  const { theme } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [screen, setScreen] = useState("start");
   const [user, setUser] = useState(null);
+
+  // Update StatusBar style based on theme
+  useEffect(() => {
+    StatusBar.setBarStyle(
+      theme.name === 'dark' ? 'light-content' : 'dark-content',
+      true
+    );
+  }, [theme]);
 
   const handleLogout = async () => {
     try {
@@ -85,7 +105,6 @@ export default function App() {
   //si connecté -> app principale
   if (isAuthenticated) {
     return (
-      <CameraProvider>
       <View style={styles.container}>
         {screen === "home" && <HomeScreen setScreen={setScreen} />}
         {screen === "inventory" && <InventoryScreen />}
@@ -125,7 +144,6 @@ export default function App() {
 
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
-      </CameraProvider>
     );
   }
 
