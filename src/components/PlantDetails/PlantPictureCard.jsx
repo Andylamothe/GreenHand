@@ -1,14 +1,13 @@
 import { Camera, X, ImageIcon } from "lucide-react-native";
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { useState, useRef } from "react";
+import { useState, useRef, use } from "react";
 import { Button, Text, TouchableOpacity, View, Image } from "react-native";
 import { styles as global } from "../../style/global";
+import { useCamera } from "../../context/CameraContext";
 
-export default function PlantPicture({
-  photos,
-  handleDeletePhoto,
-  openCamera,
-}) {
+export default function PlantPicture({ photos, handleDeletePhoto }) {
+  const { openCamera } = useCamera();
+
   return (
     <View style={global.photosCard}>
       <View style={global.photosHeader}>
