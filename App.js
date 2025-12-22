@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { Home } from './components/Home';
-
+import { CameraProvider } from "./src/context/CameraContext";
 // import { Inventory } from './components/Inventory';
 import LoginScreen from "./src/screens/LoginScreen";
 import PlantDashboardScreen from "./src/screens/PlantDashboardScreen";
@@ -85,6 +85,7 @@ export default function App() {
   //si connecté -> app principale
   if (isAuthenticated) {
     return (
+      <CameraProvider>
       <View style={styles.container}>
         {screen === "home" && <HomeScreen setScreen={setScreen} />}
         {screen === "inventory" && <InventoryScreen />}
@@ -124,6 +125,7 @@ export default function App() {
 
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
       </View>
+      </CameraProvider>
     );
   }
 
@@ -155,4 +157,5 @@ export default function App() {
     default:
       return null;
   }
+  
 }

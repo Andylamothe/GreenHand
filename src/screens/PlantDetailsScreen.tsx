@@ -1,19 +1,19 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
-import PlantProgressCard from "../components/PlantDetails/PlantProgressCard";
+import { View, Text, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import PlantProgressCard from "../components/PlantDetails/PlantProgressCard";
 import PlantCare from "../components/PlantDetails/PlantCareCard";
 import PlantPicture from "../components/PlantDetails/PlantPictureCard";
-import usePlant from "../hooks/usePlant";
-import TakePicture from "../components/PlantDetails/Camera";
 import PlantAnalyseCard from "../components/PlantDetails/PlantAnalyseCard";
 import PlantHeader from "../components/PlantDetails/PlantHeaderCard";
 import PlantWaterCard from "../components/PlantDetails/PlantWaterCard";
 
-export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
-  // Id temporaire pour tester
-  // const plantId = "693228dfa5aebb55e20cce55";
+import usePlant from "../hooks/usePlant";
+import CameraScreen from "./CameraScreen";
+import { useCamera } from "../context/CameraContext";
 
+export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
   const {
     plant,
     category,
@@ -25,9 +25,18 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
     updatePlantWateringDate,
   } = usePlant(plantId);
 
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const { isCameraOpen, photoBase64, setPhotoBase64 } = useCamera();
+
   const [analysisScore, setAnalysisScore] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  
+  useEffect(() => {
+    if (photoBase64) {
+      addPhoto(photoBase64);
+      setPhotoBase64(null);
+    }
+  }, [photoBase64]);
 
   if (loading || !plant || !category) {
     return (
@@ -37,22 +46,9 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
     );
   }
 
-  ////////////////// Analyse ////////////////////
-  const handleAnalyze = () => {};
-
-  const getScoreLabel = (score) => {};
-
-  ////////////////////// pictures //////////////////////////
-  const handlePictureTaken = async (base64) => {
-    await addPhoto(base64);
-    setIsCameraOpen(false);
-  };
-
-  const handleDeletePhoto = async (id: string) => {
+  const handleDeletePhoto = async (id) => {
     await deletePhoto(id);
   };
-
-  //// modfication ///////////////////////////////////////////
 
   const handleUpdatePlant = async (updates) => {
     await updatePlantDetails(updates);
@@ -62,8 +58,6 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
     await updatePlantWateringDate(newDate);
   };
 
-  ////////////////Navigation///////////////////////////////
-
   const handleBack = () => {
     setActiveScreen("inventory");
   };
@@ -71,7 +65,7 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {isCameraOpen ? (
-        <TakePicture onPictureTaken={handlePictureTaken} />
+        <CameraScreen />
       ) : (
         <ScrollView
           contentContainerStyle={{
@@ -88,7 +82,9 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
           />
 
           <View style={{ width: "100%", marginBottom: 20 }}>
-            <Text style={{ color: "#F4F7E8", marginLeft: 20 }}>{plant.description} </Text>
+            <Text style={{ color: "#F4F7E8", marginLeft: 20 }}>
+              {plant.description}
+            </Text>
           </View>
 
           <View style={{ width: "100%", marginBottom: 10 }}>
@@ -96,7 +92,10 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
           </View>
 
           <View style={{ width: "100%", marginBottom: 10 }}>
-            <PlantWaterCard plant={plant} onEdit={handleUpdateWateringDate} />
+            <PlantWaterCard
+              plant={plant}
+              onEdit={handleUpdateWateringDate}
+            />
           </View>
 
           <View style={{ width: "100%", marginBottom: 10 }}>
@@ -113,7 +112,6 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
             <PlantPicture
               photos={photos}
               handleDeletePhoto={handleDeletePhoto}
-              openCamera={() => setIsCameraOpen(true)}
             />
           </View>
 
@@ -121,8 +119,8 @@ export default function PlantDetailsScreen({ plantId, setActiveScreen }) {
             <PlantAnalyseCard
               analysisScore={analysisScore}
               isAnalyzing={isAnalyzing}
-              handleAnalyze={handleAnalyze}
-              getScoreLabel={getScoreLabel}
+              handleAnalyze={() => {}}
+              getScoreLabel={() => {}}
             />
           </View>
         </ScrollView>
