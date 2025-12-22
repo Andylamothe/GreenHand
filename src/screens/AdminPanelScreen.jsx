@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { styles } from "../style/profilStyle";
 import { AdminApi } from "../api/adminApi";
+import { notify } from "../utils/notify";
 
 export default function AdminPanelScreen({ goBack }) {
   const [userId, setUserId] = useState("");
@@ -29,6 +30,7 @@ export default function AdminPanelScreen({ goBack }) {
     try {
       await AdminApi.promoteUser(userId);
       setMessage("User promoted to admin ");
+      notify("User promoted to admin !");
       setUserId("");
     } catch (err) {
       setMessage("Promotion failed ");
@@ -50,6 +52,7 @@ export default function AdminPanelScreen({ goBack }) {
     try {
       await AdminApi.deleteInventory(inventoryUserId);
       setMessage("Inventory deleted successfully ");
+      notify(" Inventory deleted successfully !");
       setInventoryUserId("");
     } catch (err) {
       setMessage("Delete inventory failed ");

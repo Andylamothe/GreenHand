@@ -8,6 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { ArrowLeft, Pen } from "lucide-react-native";
+import { notify } from "../../utils/notify";
 
 export default function PlantHeader({ plant, onBack, onEdit }) {
   const [open, setOpen] = useState(false);
@@ -17,6 +18,8 @@ export default function PlantHeader({ plant, onBack, onEdit }) {
   const save = () => {
     onEdit({ name, description });
     setOpen(false);
+
+    notify("Détails de la plante mis à jour !");
   };
 
   return (

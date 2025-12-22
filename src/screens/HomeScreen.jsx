@@ -12,6 +12,7 @@ import { useTheme } from "../context/ThemeContext";
 import { getWeatherData } from "../api/weatherAPI";
 import { Sprout } from "lucide-react-native";
 import Icon from "react-native-vector-icons/Feather";
+import { checkDailyReminder } from "../utils/reminderService";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -63,6 +64,9 @@ const HomeScreen = ({ setScreen }) => {
     fetchWeather();
   }, []);
 
+   useEffect(() => {
+    checkDailyReminder();
+  }, []);
   // fonction pour envelopper chaque icône avec le bounce
   const BouncyIcon = ({ children }) => (
     <Animated.View style={bounceStyle}>{children}</Animated.View>
