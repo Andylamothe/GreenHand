@@ -11,6 +11,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { WaveLayer } from "../Animation/WaveAnimation";
+import { notify } from "../../utils/notify";
 
 export default function PlantWaterCard({ plant, onEdit }) {
   const [showPicker, setShowPicker] = useState(false);
@@ -41,6 +42,8 @@ export default function PlantWaterCard({ plant, onEdit }) {
     if (selectedDate) {
       onEdit(selectedDate.toISOString());
       setTriggerWave(true);
+
+      notify("Arrosage mis à jour !");
     }
   };
 
@@ -77,6 +80,7 @@ export default function PlantWaterCard({ plant, onEdit }) {
           mode="date"
           onChange={handleChange}
           style={styles.datePicker}
+          maximumDate={new Date()}
         />
       )}
     </View>

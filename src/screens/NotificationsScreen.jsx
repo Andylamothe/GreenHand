@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "../style/profilStyle";
+import { notify } from "../utils/notify";
 
 export default function NotificationsScreen({ goBack }) {
   const [loading, setLoading] = useState(true);
@@ -88,20 +89,18 @@ export default function NotificationsScreen({ goBack }) {
 
         
           <View style={styles.notificationRow}>
-            <View style={styles.notificationLeft}>
-              <Feather name="mail" size={18} color="white" />
-              <Text style={styles.notificationText}>
-                Email Notifications
-              </Text>
-            </View>
+          <TouchableOpacity
+            style={styles.notificationLeft}
+            onPress={() => notify("Feature coming soon!", "info")}
+          >
+            <Feather name="mail" size={18} color="gray" />
+            <Text style={[styles.notificationText, { color: "gray" }]}>
+              Email Notifications (soon)
+            </Text>
+          </TouchableOpacity>
 
-            <Switch
-              value={settings.email}
-              onValueChange={(v) =>
-                saveSettings({ ...settings, email: v })
-              }
-            />
-          </View>
+          <Switch value={false} disabled={true} />
+        </View>
 
          
           <View style={styles.notificationRow}>
