@@ -12,6 +12,7 @@ import { useTheme } from "../context/ThemeContext";
 import { getWeatherData } from "../utils/weatherAPI";
 import { Sprout } from "lucide-react-native";
 import Icon from "react-native-vector-icons/Feather";
+import { checkDailyReminder } from "../utils/reminderService";
 
 const HomeScreen = ({ setScreen }) => {
   const { theme } = useTheme();
@@ -40,6 +41,10 @@ const HomeScreen = ({ setScreen }) => {
     };
 
     fetchWeather();
+  }, []);
+
+   useEffect(() => {
+    checkDailyReminder();
   }, []);
 
   return (

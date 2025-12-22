@@ -22,6 +22,18 @@ export const createStyles = (theme) =>
       backgroundColor: theme.colors.background,
     },
 
+    overlay:{
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: theme.colors.background, 
+      justifyContent: "center",
+      alignItems: "center",
+    },
+
+    lottie: {
+    width: 400,
+    height:400,
+    },
+
     content: {
       marginTop: 20,
       padding: 40,

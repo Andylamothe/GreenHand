@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ActivityIndicator, StatusBar } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import FlashMessage from "react-native-flash-message";
 
 // import { Home } from './components/Home';
 import { CameraProvider } from "./src/context/CameraContext";
@@ -39,6 +40,7 @@ function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [screen, setScreen] = useState("start");
   const [user, setUser] = useState(null);
+  
 
   // Update StatusBar style based on theme
   useEffect(() => {
@@ -105,6 +107,7 @@ function AppContent() {
   //si connecté -> app principale
   if (isAuthenticated) {
     return (
+      
       <View style={styles.container}>
         {screen === "home" && <HomeScreen setScreen={setScreen} />}
         {screen === "inventory" && <InventoryScreen />}
@@ -143,6 +146,7 @@ function AppContent() {
         {screen === "weatherDashboard" && <WeatherDashboard />}
 
         <Navigation activeScreen={screen} setActiveScreen={setScreen} />
+        <FlashMessage position="top" />
       </View>
     );
   }
