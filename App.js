@@ -17,7 +17,7 @@ import AccountSettingsScreen from "./src/screens/Profil/AccountSettingsScreen";
 import NotificationsScreen from "./src/screens/NotificationsScreen";
 import HelpSupportScreen from "./src/screens/HelpSupportScreen";
 import AdminPanelScreen from "./src/screens/AdminPanelScreen";
-
+import ParticlesSplashScreen from "./src/screens/ParticlesSplashScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 // import { PlantDetail } from './components/PlantDetail';
 import Navigation from "./src/components/Navigation";
@@ -39,6 +39,7 @@ function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [screen, setScreen] = useState("start");
   const [user, setUser] = useState(null);
+const [showSplash, setShowSplash] = useState(true);
 
   // Update StatusBar style based on theme
   useEffect(() => {
@@ -101,6 +102,10 @@ function AppContent() {
       </View>
     );
   }
+
+  if (isAuthenticated && showSplash) {
+  return <ParticlesSplashScreen onFinish={() => setShowSplash(false)} />;
+}
 
   //si connecté -> app principale
   if (isAuthenticated) {

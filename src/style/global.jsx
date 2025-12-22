@@ -438,5 +438,13 @@ export const styles = createGlobalStyles({
     text: '#F4F7E8',
     textTertiary: '#f4f7e8b2',
     buttonBg: 'rgba(95, 133, 80, 0.5)',
-  }
+  },
+    container: {
+    flex: 1,
+    backgroundColor: "#1B5E20", // vert foncé
+  },
+  plant: {
+    width: 160,
+    height: 160,
+  },
 });
