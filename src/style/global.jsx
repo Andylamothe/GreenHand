@@ -1,29 +1,30 @@
 import { StyleSheet } from 'react-native';
  
-export const styles = StyleSheet.create({
+// Function to create dynamic styles based on theme
+export const createGlobalStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5F8550",
+    backgroundColor: theme.colors.background,
   },
   scrollContent: {
     padding: 20,
     paddingBottom: 100,
   },
   welcomeCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: theme.colors.card,
     borderRadius: 32,
     padding: 24,
     marginBottom: 16,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: theme.colors.cardBorder,
   },
   welcomeIcon: {
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: theme.colors.buttonBg,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
@@ -36,27 +37,27 @@ export const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 16,
-    color: '#F4F7E8',
+    color: theme.colors.text,
     marginBottom: 4,
   },
   farmerText: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#F4F7E8',
+    color: theme.colors.text,
   },
  
   weatherCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: theme.colors.card,
     borderRadius: 32,
     padding: 24,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: theme.colors.cardBorder,
   },
   weatherTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#F4F7E8',
+    color: theme.colors.text,
     marginBottom: 20,
   },
   weatherMetrics: {
@@ -70,7 +71,7 @@ export const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    backgroundColor: theme.colors.buttonBg,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
@@ -78,38 +79,38 @@ export const styles = StyleSheet.create({
   weatherValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#F4F7E8',
+    color: theme.colors.text,
   },
  
   tipsCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: theme.colors.card,
     borderRadius: 32,
     padding: 24,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: theme.colors.cardBorder,
   },
   tipsTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#F4F7E8',
+    color: theme.colors.text,
     marginBottom: 16,
   },
   tipItem: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: theme.colors.card,
     borderRadius: 24,
     padding: 20,
     marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
+    borderColor: theme.colors.cardBorder,
   },
   tipIconContainer: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: theme.colors.buttonBg,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
@@ -120,12 +121,12 @@ export const styles = StyleSheet.create({
   tipTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#F4F7E8',
+    color: theme.colors.text,
     marginBottom: 4,
   },
   tipSubtitle: {
     fontSize: 14,
-    color: '#f4f7e8b2',
+    color: theme.colors.textTertiary,
   },
  
   bottomNav: {
@@ -133,13 +134,13 @@ export const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    backgroundColor: theme.colors.buttonBg,
     borderRadius: 32,
     flexDirection: 'row',
     paddingVertical: 16,
     paddingHorizontal: 8,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: theme.colors.cardBorder,
   },
   navItem: {
     flex: 1,
@@ -147,7 +148,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   navItemActive: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: theme.colors.activeNav,
     borderRadius: 20,
     paddingVertical: 12,
   },
@@ -157,7 +158,7 @@ export const styles = StyleSheet.create({
   navLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#F4F7E8',
+    color: theme.colors.text,
   },
 
   floatingAddButton: {
@@ -427,5 +428,23 @@ input: {
 },
 });
 
-
-
+// Default styles for backward compatibility (dark theme)
+export const styles = createGlobalStyles({
+  name: 'dark',
+  colors: {
+    background: '#1a2e1a',
+    card: 'rgba(95, 133, 80, 0.4)',
+    cardBorder: 'rgba(169, 196, 108, 0.3)',
+    text: '#F4F7E8',
+    textTertiary: '#f4f7e8b2',
+    buttonBg: 'rgba(95, 133, 80, 0.5)',
+  },
+    container: {
+    flex: 1,
+    backgroundColor: "#1B5E20", // vert foncé
+  },
+  plant: {
+    width: 160,
+    height: 160,
+  },
+});
