@@ -11,6 +11,9 @@ import { PlantApi } from "../../api/plantApi";
 import { styles } from "../../style/global";
 import ajoutStyles from "../../style/ajoutPlantStyles";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { notify } from "../../utils/notify";
+import { Feather } from "@expo/vector-icons";
+
 
 export default function AjoutPlant({ onBack, onAddSuccess }) {
   const [step, setStep] = useState(1);
@@ -47,6 +50,8 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
         lastWatered,
       });
 
+      notify("Plant added to your inventory !");
+
       onAddSuccess();
       onBack();
     } catch (erreur) {
@@ -58,13 +63,13 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
     <View style={[styles.container, ajoutStyles.screen]}>
       <TouchableOpacity onPress={onBack} style={ajoutStyles.backButton}>
         <Text style={ajoutStyles.backIcon}>⬅</Text>
-        <Text style={ajoutStyles.backText}>Retour</Text>
+        <Text style={ajoutStyles.backText}>Back</Text>
       </TouchableOpacity>
 
       {step === 1 && (
         <View style={ajoutStyles.stepContainer}>
           <Text style={ajoutStyles.title}>
-            Quel sera le nom de votre plante ?
+            What is the name of your plant ?
           </Text>
 
           <TextInput
@@ -79,7 +84,7 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
             style={styles.nextButton}
             onPress={() => name.trim() && setStep(2)}
           >
-            <Text style={styles.nextButtonText}>Suivant ➜</Text>
+            <Text style={styles.nextButtonText}>Next ➜</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -87,11 +92,11 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
       {step === 2 && (
         <View style={[ajoutStyles.stepContainer, { flex: 1 }]}>
           <Text style={ajoutStyles.title}>
-            Quel est le type de votre plante ?
+            What is the type of your plant ?
           </Text>
 
           <TextInput
-            placeholder="Ajouter une catégorie..."
+            placeholder="Add a category..."
             placeholderTextColor="#ccc"
             style={ajoutStyles.input}
             value={search}
@@ -131,7 +136,7 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
               style={[styles.nextButton, ajoutStyles.bottomSpace]}
               onPress={() => selectedCategory && setStep(3)}
             >
-              <Text style={styles.nextButtonText}>Suivant ➜</Text>
+              <Text style={styles.nextButtonText}>Next ➜</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -139,7 +144,7 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
 
       {step === 3 && (
         <View style={ajoutStyles.stepContainer}>
-          <Text style={ajoutStyles.title}>Description (optionnelle) </Text>
+          <Text style={ajoutStyles.title}>Description (optional) </Text>
 
           <TextInput
             placeholder="Description..."
@@ -155,44 +160,51 @@ export default function AjoutPlant({ onBack, onAddSuccess }) {
             style={styles.nextButton}
             onPress={() => setStep(4)}
           >
-            <Text style={styles.nextButtonText}>Suivant ➜</Text>
+            <Text style={styles.nextButtonText}>Next ➜</Text>
           </TouchableOpacity>
         </View>
       )}
 
       {step === 4 && (
-        <View style={ajoutStyles.stepContainer}>
-          <Text style={ajoutStyles.title}>Dernière date d'arrosage</Text>
+  <View style={ajoutStyles.stepContainer}>
+    <Text style={ajoutStyles.title}>Last watering date</Text>
 
-          <TouchableOpacity
-            onPress={() => setShowPicker(true)}
-            style={styles.input}
-          >
-            <Text style={{ color: "#F4F7E8" }}>
-              {lastWatered
-                ? new Date(lastWatered).toLocaleDateString()
-                : "Choisir une date"}
-            </Text>
-          </TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => setShowPicker(true)}
+      style={ajoutStyles.dateButton}
+    >
+      <View style={ajoutStyles.dateButtonContent}>
+        <Feather name="calendar" size={20} color="#F4F7E8" />
+        <Text style={ajoutStyles.dateText}>
+          {lastWatered
+            ? new Date(lastWatered).toLocaleDateString()
+            : "Choisir une date"}
+        </Text>
+      </View>
+    </TouchableOpacity>
 
-          {showPicker && (
-            <DateTimePicker
-              value={lastWatered ? new Date(lastWatered) : new Date()}
-              mode="date"
-              maximumDate={new Date()}
+    <Text style={ajoutStyles.hintText}>
+      Select the last watering date for your plant.
+    </Text>
 
-              onChange={(event, date) => {
-                setShowPicker(false);
-                if (date) setLastWatered(date.toISOString());
-              }}
-            />
-          )}
+    {showPicker && (
+      <DateTimePicker
+        value={lastWatered ? new Date(lastWatered) : new Date()}
+        mode="date"
+        maximumDate={new Date()}
+        onChange={(event, date) => {
+          setShowPicker(false);
+          if (date) setLastWatered(date.toISOString());
+        }}
+      />
+    )}
 
-          <TouchableOpacity style={styles.nextButton} onPress={handleSubmit}>
-            <Text style={styles.nextButtonText}>Créer ma plante </Text>
-          </TouchableOpacity>
-        </View>
-      )}
+    <TouchableOpacity style={styles.nextButton} onPress={handleSubmit}>
+      <Text style={styles.nextButtonText}>Create my plant</Text>
+    </TouchableOpacity>
+  </View>
+)}
+
     </View>
   );
 }

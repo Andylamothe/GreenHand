@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef} from "react";
+import { Animated } from "react-native";
 import PlantDetailsScreen from "./PlantDetailsScreen";
-import { api } from "../api/axiosInstance";
 
 import {
   View,
@@ -18,6 +18,8 @@ import { Search } from "lucide-react-native";
 import ItemCard from "../components/itemCard";
 import AjoutPlant from "../components/ForInventory/AjoutPlant";
 import { CategoryApi } from "../api/categoryAp";
+import PlantGrow from "../components/Animation/PlantGrow";
+import { notify } from "../utils/notify";
 
 export default function InventoryScreen() {
   const { theme } = useTheme();
@@ -32,6 +34,18 @@ export default function InventoryScreen() {
   const [search, setSearch] = useState("");
   const [selectedPlantId, setSelectedPlantId] = useState(null);
 
+
+  const [showGrowAnim, setShowGrowAnim] = useState(false);
+
+  const handleAddPress = () => {
+    setShowGrowAnim(true);
+  };
+
+
+
+
+
+
   const handleSearch = async (text) => {
     setSearch(text);
 
@@ -43,8 +57,12 @@ export default function InventoryScreen() {
     try {
       const res = await InventoryApi.searchNamePlant(text);
       setInventory(res.data);
+       if (res.data.length === 0) {
+        notify("No plants found", "warning");
+      }
     } catch (e) {
       console.log("Erreur search:", e);
+      notify("Error during search", "danger");
     }
   };
   const getCategoryName = (id) => {
@@ -58,8 +76,11 @@ export default function InventoryScreen() {
 
     setInventory((prev) => prev.filter((p) => p._id !== plantId));
     setOriginalInventory((prev) => prev.filter((p) => p._id !== plantId));
+    notify("Plant delete from inventory", "success");
+
   } catch (err) {
     console.log("Erreur suppression plante:", err);
+    notify("Impossible to delete the plant", "danger");
   }
 };
 
@@ -72,6 +93,7 @@ export default function InventoryScreen() {
       setInventory(plants);
     } catch (err) {
       console.log("Erreur inventaire:", err);
+      notify("Error loading inventory", "danger");
     }
   };
 
@@ -115,14 +137,17 @@ export default function InventoryScreen() {
     );
   }
 
-  if (activeScreen === "addPlant") {
-    return (
-      <AjoutPlant
-        onBack={() => setActiveScreen("inventory")}
-        onAddSuccess={() => loadInventory()}
-      />
-    );
-  }
+    if (activeScreen === "addPlant") {
+      return (
+        <AjoutPlant
+          onBack={() => setActiveScreen("inventory")}
+          onAddSuccess={() => {
+            notify("Plant added to your inventory", "success");
+            loadInventory();
+          }}
+        />
+      );
+    }
 
   return (
     <View style={inventoryStyles.screen}>
@@ -159,10 +184,10 @@ export default function InventoryScreen() {
         {filtered.length === 0 && (
           <View style={inventoryStyles.emptyContainer}>
             <Text style={inventoryStyles.emptyTitle}>
-              Aucun item dans votre inventaire 🌱
+              No items in your inventory 🌱
             </Text>
             <Text style={inventoryStyles.emptySubtitle}>
-              Ajoutez une plante pour commencer
+              Add a plant to get started
             </Text>
           </View>
         )}
@@ -183,12 +208,21 @@ export default function InventoryScreen() {
         </View>
       </ScrollView>
 
+      {showGrowAnim && (
+        <PlantGrow
+          onAnimationFinish={() => {
+            setShowGrowAnim(false);
+            setActiveScreen("addPlant");
+          }}
+        />
+      )}
       <TouchableOpacity
         style={styles.floatingAddButton}
-        onPress={() => setActiveScreen("addPlant")}
+        onPress={handleAddPress}
       >
         <Text style={inventoryStyles.addIcon}>+</Text>
       </TouchableOpacity>
+
     </View>
   );
 }

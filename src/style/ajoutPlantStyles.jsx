@@ -88,4 +88,35 @@ export default StyleSheet.create({
   bottomSpace: {
     marginBottom: 30,
   },
+
+  dateButton: {
+  backgroundColor: "rgba(255, 255, 255, 0.08)",
+  borderRadius: 14,
+  paddingVertical: 14,
+  paddingHorizontal: 18,
+  marginVertical: 12,
+  borderWidth: 1,
+  borderColor: "rgba(255,255,255,0.25)",
+},
+
+dateButtonContent: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 10,
+},
+
+dateText: {
+  color: "#F4F7E8",
+  fontSize: 16,
+  fontWeight: "500",
+},
+
+hintText: {
+  color: "rgba(255,255,255,0.5)",
+  fontSize: 12,
+  textAlign: "center",
+  marginBottom: 20,
+},
+
 });
