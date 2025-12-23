@@ -44,13 +44,13 @@ Green Hand est une application mobile conçue pour aider les petits agriculteurs
 ## Équipe de développement
 ### Répartition des tâches
 
-- Sarah Charef : Documentation, Gestion des utilisateurs, Prévisions météorologiques, Frontend.
+- Sarah Charef : Documentation, Gestion des utilisateurs, Prévisions météorologiques, Analyse de données (python), Frontend.
 
-- Nadine Chargui : Conception Backend, Machine Learning, Gestion des photos.
+- Nadine Chargui : Conception Backend, Analyse de données (python), Gestion des photos.
 
 - Ikram Saidi : Gestion des photos, Prévisions météorologiques, Inventaire, Conception Backend.
 
-- Andy Lamothe-Futu : Machine Learning, Frontend, Gestion des photos.
+- Andy Lamothe-Futu :  Gestion du design de l'application global, Gestion du chatbot intelligent, Gestion du UI/UX de base, Gestion du theme sombre/clair
 
 ## Fonctionnalités natives utilisées
 
